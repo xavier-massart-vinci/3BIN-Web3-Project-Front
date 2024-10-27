@@ -20,7 +20,7 @@ function Login() {
         setPassword(event.target.value);
     }
 
-    const handleFormSubmit = (event) =>{
+    const loginRequest = (event) =>{
         event.preventDefault();
         // fetch the payload
     }
@@ -32,7 +32,7 @@ function Login() {
             </div>
             <div className='login-container'>
                 <div className='login-form-wrapper'>
-                    <form onSubmit={handleFormSubmit} className='login-form'>
+                    <form onSubmit={loginRequest} className='login-form'>
                         <h2 className='form-title'>Sign In</h2>
                         <div className="form-group">
                             <label htmlFor="pseudo" className='form-label'>Pseudo</label>
