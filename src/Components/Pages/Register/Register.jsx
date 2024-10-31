@@ -1,6 +1,7 @@
-import "./Register.css"
+import "./Register.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { register } from "../../../utlis/services";
 
 function Register() {
   const [pseudo, setPseudo] = useState("");
@@ -31,15 +32,19 @@ function Register() {
 
   // async - await
   // set token given
-  const registerRequest = () => {
-    // fetch the payload
-    navigate('/')
+  const registerRequest = async (e) => {
+    e.preventDefault();
+    await register({
+      pseudo: pseudo,
+      password: password,
+    });
+    navigate("/");
   };
 
   return (
     <>
       <div className="register-header">
-        <h1 className="register-title">VinciChat</h1>
+        <h1 className="register-title">Echoes</h1>
       </div>
       <div className="register-container">
         <div className="register-form-wrapper">
@@ -95,7 +100,7 @@ function Register() {
               Register
             </button>
 
-            <p className='error-message'>{error}</p>
+            <p className="error-message">{error}</p>
 
             <a onClick={handleSignInClick} className="signIn-link">
               Sign In?

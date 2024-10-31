@@ -4,12 +4,14 @@ import process from 'process';
 
 const register = (payload) => {
   const request = axios.post(`${process.env.API_BASE_URL}/auths/register`, {...payload});
-  return request.then(response => response.data);
+  const token = request.then(response => response.data);
+   localStorage.setItem('token',token);
 };
-const login = (payload) => {
 
+const login = (payload) => {
    const request = axios.post(`${process.env.API_BASE_URL}/auths/login`, {...payload})
-   return request.then(response => response.data);
+   const token = request.then(response => response.data);
+   localStorage.setItem('token',token);
 };
 
 export {

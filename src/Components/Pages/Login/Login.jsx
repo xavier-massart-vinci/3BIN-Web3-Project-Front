@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { useState } from "react";
+import { login } from "../../../utlis/services";
 
 function Login() {
   const [pseudo, setPseudo] = useState("");
@@ -15,16 +16,20 @@ function Login() {
 
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
-  const loginRequest = (e) => {
+  const loginRequest = async (e) => {
     e.preventDefault();
-    // fetch the payload
+    await login(
+      {
+        pseudo : pseudo,
+        password : password
+      });
     navigate('/');
   };
 
   return (
     <>
       <div className="login-header">
-        <h1 className="login-title">VinciChat</h1>
+        <h1 className="login-title">Echoes</h1>
       </div>
       <div className="login-container">
         <div className="login-form-wrapper">
