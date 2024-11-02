@@ -1,10 +1,20 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
+import Home from './Components/Pages/Home/Home'
+import Login from './Components/Pages/Login/Login'
+import Register from './Components/Pages/Register/Register'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <Router>
+      <Routes>
+        <Route path="/" element ={<Home />} />
+        <Route path="/login" element ={<Login />} />
+        <Route path="/register" element ={<Register />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Router>
+   
   </StrictMode>,
 )
