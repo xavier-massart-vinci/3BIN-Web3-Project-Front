@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import config from '../../config';
+import config from '../../utlis/config';
 
 const AddFriend = () => {
     const [username, setUsername] = useState('');
@@ -8,7 +8,7 @@ const AddFriend = () => {
 
     useEffect(() => {
         if (username.length > 2) {
-            axios.get(`${config.BASE_URL}/friend/searchUsers?username=${username}`)
+            axios.get(`${config.BASE_URL}/friends/search?username=${username}`)
                 .then(response => setSuggestions(response.data))
                 .catch(error => console.error('Error fetching suggestions:', error));
         } else {
@@ -17,7 +17,7 @@ const AddFriend = () => {
     }, [username]);
 
     const addFriend = (friendUsername) => {
-        axios.post(`${config.BASE_URL}/friend/friends`, { username: friendUsername })
+        axios.post(`${config.BASE_URL}/friends/addFriend`, { username: friendUsername })
             .then(response => console.log('Friend added:', response.data))
             .catch(error => console.error('Error adding friend:', error));
     };
