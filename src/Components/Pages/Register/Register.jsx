@@ -18,27 +18,29 @@ function Register() {
     navigate("/login");
   };
 
-  const handleForm = (event) => {
+  const handleForm = async (event) => {
     event.preventDefault();
 
     if (password !== password2) {
       setError("Passwords do  not match");
     } else {
       setError("");
-      // await
-      return registerRequest();
+      try {
+        await registerRequest();
+        navigate("/")
+      } catch (e) {
+        setError(e.message || "An error occured during registration")
+      }
     }
   };
 
-  // async - await
-  // set token given
-  const registerRequest = async (e) => {
-    e.preventDefault();
+
+  const registerRequest = async () => {
     await register({
       pseudo: pseudo,
       password: password,
     });
-    navigate("/");
+   return navigate("/");
   };
 
   return (

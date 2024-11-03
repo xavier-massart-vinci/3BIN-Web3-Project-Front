@@ -6,6 +6,7 @@ import { login } from "../../../utlis/services";
 function Login() {
   const [pseudo, setPseudo] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleRegisterClick = () => {
@@ -18,12 +19,17 @@ function Login() {
 
   const loginRequest = async (e) => {
     e.preventDefault();
-    await login(
-      {
+
+    try {
+      await login(
+        {
         pseudo : pseudo,
         password : password
       });
-    navigate('/');
+      navigate('/');
+    } catch (e) {
+      setError(e.message || "An error occurred during sign-in");
+    }
   };
 
   return (
@@ -69,6 +75,8 @@ function Login() {
             <button type="submit" className="form-button">
               Sign In
             </button>
+            
+            <p className="error-message">{error}</p>
 
             <a onClick={handleRegisterClick} className="forgot-password-link">
               Create account?
