@@ -2,15 +2,16 @@ import "./Register.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../../utlis/services";
+import errorMapping from "../../../utlis/mapError";
 
 function Register() {
-  const [pseudo, setPseudo] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handlePseudoChange = (e) => setPseudo(e.target.value);
+  const handleUsernameChange = (e) => setUsername(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
   const handlePassword2Change = (e) => setPassword2(e.target.value);
 
@@ -29,7 +30,7 @@ function Register() {
         await registerRequest();
         navigate("/")
       } catch (e) {
-        setError(e.message || "An error occured during registration")
+        setError(errorMapping(e.status))
       }
     }
   };
@@ -37,7 +38,7 @@ function Register() {
 
   const registerRequest = async () => {
     await register({
-      pseudo: pseudo,
+      username: username,
       password: password,
     });
    return navigate("/");
@@ -54,16 +55,16 @@ function Register() {
             <h2 className="form-title">Register</h2>
 
             <div className="form-group">
-              <label htmlFor="pseudo" className="form-label">
-                Pseudo
+              <label htmlFor="Username" className="form-label">
+              Username
               </label>
               <input
                 type="text"
-                name="pseudo"
-                id="pseudo"
+                name="username"
+                id="username"
                 className="form-input"
-                value={pseudo}
-                onChange={handlePseudoChange}
+                value={username}
+                onChange={handleUsernameChange}
                 required
               />
             </div>

@@ -2,9 +2,10 @@ import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { useState } from "react";
 import { login } from "../../../utlis/services";
+import errorMapping from "../../../utlis/mapError";
 
 function Login() {
-  const [pseudo, setPseudo] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ function Login() {
     navigate("/register");
   };
 
-  const handlePseudoChange = (e) => setPseudo(e.target.value);
+  const handleUsernameChange = (e) => setUsername(e.target.value);
 
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
@@ -23,12 +24,12 @@ function Login() {
     try {
       await login(
         {
-        pseudo : pseudo,
+        username : username,
         password : password
       });
       navigate('/');
     } catch (e) {
-      setError(e.message || "An error occurred during sign-in");
+      setError(errorMapping(e.status));
     }
   };
 
@@ -51,8 +52,8 @@ function Login() {
                 name="pseudo"
                 id="pseudo"
                 className="form-input"
-                value={pseudo}
-                onChange={handlePseudoChange}
+                value={username}
+                onChange={handleUsernameChange}
                 required
               />
             </div>
