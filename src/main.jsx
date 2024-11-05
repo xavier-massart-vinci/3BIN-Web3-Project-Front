@@ -6,7 +6,6 @@ import App from './Components/Pages/App/App'
 import Home from './Components/Pages/Home/Home'
 import Login from './Components/Pages/Login/Login'
 import Register from './Components/Pages/Register/Register'
-import { socket } from './socket'
 
 const router = createBrowserRouter([
   {
@@ -27,7 +26,7 @@ const router = createBrowserRouter([
       },
       {
         path: "*",
-        element: <Login />,
+        element: <Home />,
       },
     ],
   },
