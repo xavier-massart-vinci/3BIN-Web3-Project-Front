@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Home from './Components/Pages/Home/Home'
 import Login from './Components/Pages/Login/Login'
 import Register from './Components/Pages/Register/Register'
+import { socket } from './socket'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -15,6 +16,5 @@ createRoot(document.getElementById('root')).render(
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
-   
   </StrictMode>,
 )
