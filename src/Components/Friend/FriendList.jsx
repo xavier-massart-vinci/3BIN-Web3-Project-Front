@@ -14,6 +14,7 @@ const FriendList = () => {
 
     return (
         <ul>
+            <h3>Friends List</h3>
             {friends.map(friend => (
                 <li key={friend.id}>{friend.username}</li>
             ))}
