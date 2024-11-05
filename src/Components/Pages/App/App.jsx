@@ -1,7 +1,8 @@
+import { Outlet } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import { socket } from './socket';
-
-export default function App() {
+ 
+function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [fooEvents, setFooEvents] = useState([]);
 
@@ -29,12 +30,11 @@ export default function App() {
     };
   }, []);
 
-  return (
-    <div className="App">
-      <ConnectionState isConnected={ isConnected } />
-      <Events events={ fooEvents } />
-      <ConnectionManager />
-      <MyForm />
-    </div>
-  );
+    return (
+        <div>
+            <Outlet />
+        </div>
+    );
 }
+
+export default App;
