@@ -1,15 +1,17 @@
-import "./Register.css"
+import "./Register.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { register } from "../../../utlis/services";
+import errorMapping from "../../../utlis/mapError";
 
 function Register() {
-  const [pseudo, setPseudo] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handlePseudoChange = (e) => setPseudo(e.target.value);
+  const handleUsernameChange = (e) => setUsername(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
   const handlePassword2Change = (e) => setPassword2(e.target.value);
 
@@ -17,29 +19,35 @@ function Register() {
     navigate("/login");
   };
 
-  const handleForm = (event) => {
+  const handleForm = async (event) => {
     event.preventDefault();
 
     if (password !== password2) {
       setError("Passwords do  not match");
     } else {
       setError("");
-      // await
-      return registerRequest();
+      try {
+        await registerRequest();
+        navigate("/")
+      } catch (e) {
+        setError(errorMapping(e.status))
+      }
     }
   };
 
-  // async - await
-  // set token given
-  const registerRequest = () => {
-    // fetch the payload
-    navigate('/')
+
+  const registerRequest = async () => {
+    await register({
+      username: username,
+      password: password,
+    });
+   return navigate("/");
   };
 
   return (
     <>
       <div className="register-header">
-        <h1 className="register-title">VinciChat</h1>
+        <h1 className="register-title">Echoes</h1>
       </div>
       <div className="register-container">
         <div className="register-form-wrapper">
@@ -47,16 +55,16 @@ function Register() {
             <h2 className="form-title">Register</h2>
 
             <div className="form-group">
-              <label htmlFor="pseudo" className="form-label">
-                Pseudo
+              <label htmlFor="Username" className="form-label">
+              Username
               </label>
               <input
                 type="text"
-                name="pseudo"
-                id="pseudo"
+                name="username"
+                id="username"
                 className="form-input"
-                value={pseudo}
-                onChange={handlePseudoChange}
+                value={username}
+                onChange={handleUsernameChange}
                 required
               />
             </div>
@@ -95,7 +103,7 @@ function Register() {
               Register
             </button>
 
-            <p className='error-message'>{error}</p>
+            <p className="error-message">{error}</p>
 
             <a onClick={handleSignInClick} className="signIn-link">
               Sign In?
