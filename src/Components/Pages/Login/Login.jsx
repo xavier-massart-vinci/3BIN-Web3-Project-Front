@@ -1,30 +1,42 @@
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { useState } from "react";
+import { login } from "../../../utlis/services";
+import errorMapping from "../../../utlis/mapError";
 
 function Login() {
-  const [pseudo, setPseudo] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleRegisterClick = () => {
     navigate("/register");
   };
 
-  const handlePseudoChange = (e) => setPseudo(e.target.value);
+  const handleUsernameChange = (e) => setUsername(e.target.value);
 
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
-  const loginRequest = (e) => {
+  const loginRequest = async (e) => {
     e.preventDefault();
-    // fetch the payload
-    navigate('/');
+
+    try {
+      await login(
+        {
+        username : username,
+        password : password
+      });
+      navigate('/');
+    } catch (e) {
+      setError(errorMapping(e.status));
+    }
   };
 
   return (
     <>
       <div className="login-header">
-        <h1 className="login-title">VinciChat</h1>
+        <h1 className="login-title">Echoes</h1>
       </div>
       <div className="login-container">
         <div className="login-form-wrapper">
@@ -40,8 +52,8 @@ function Login() {
                 name="pseudo"
                 id="pseudo"
                 className="form-input"
-                value={pseudo}
-                onChange={handlePseudoChange}
+                value={username}
+                onChange={handleUsernameChange}
                 required
               />
             </div>
@@ -64,6 +76,8 @@ function Login() {
             <button type="submit" className="form-button">
               Sign In
             </button>
+            
+            <p className="error-message">{error}</p>
 
             <a onClick={handleRegisterClick} className="forgot-password-link">
               Create account?
