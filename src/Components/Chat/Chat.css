@@ -7,3 +7,59 @@
     padding: 10px 20px 10px 20px;
     box-sizing: border-box;
 }
+
+.search-container {
+    position: absolute;
+    left: 50%;
+    bottom: 3%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 60%; /* Ajuste selon l'espace disponible */
+    max-width: 400px; /* Limite la taille maximale */
+    background-color: #f0f2f5;
+    padding: 8px;
+    border-radius: 30px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Ombre douce */
+}
+
+.message-bar {
+    position: absolute;
+    left: 50%;
+    bottom: 3%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 10px;
+    width: 100%;
+    max-width: 600px;
+    background-color: #f8f8f8;
+  }
+  
+  .message-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    resize: none;
+    background: none;
+    font-size: 16px;
+    line-height: 1.5;
+    font-family: sans-serif;
+  }
+  
+  .message-input::placeholder {
+    color: #999;
+  }
+  
+  .send-button {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 20px;
+    margin-left: 10px;
+    color: #666;
+  }
