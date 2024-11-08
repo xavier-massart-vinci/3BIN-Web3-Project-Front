@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import './Navbar.css';
 
 const contacts = [
     { id: 1, name: "Contact 1" },
     { id: 2, name: "Contact 2" },
     { id: 3, name: "Contact 3" },
-   /* { id: 4, name: "Contact 4" },
+    { id: 4, name: "Contact 4" },
     { id: 5, name: "Contact 5" },
     { id: 6, name: "Contact 6" },
     { id: 7, name: "Contact 7" },
@@ -45,7 +45,7 @@ const contacts = [
     { id: 40, name: "Contact 40" },
     { id: 41, name: "Contact 41" },
     { id: 42, name: "Contact 42" },
-    { id: 43, name: "Contact 43" },*/
+    { id: 43, name: "Contact 43" },
 ];
 
 const Navbar = () => {
@@ -65,25 +65,27 @@ const Navbar = () => {
             </div>
 
             <div className="menu-scroll">
-                <div
+                <Link
                     onClick={() => setCurrentContact(0)} 
+                    to={`/contact/0`}
                     className={`contact-card ${currentContact === 0 ? 'active-contact' : ''}`}
                 >
-                    <img src="/public/group.png" alt="Contact" className="contact-image no-select-image" />
+                    <img src="/group.png" alt="Contact" className="contact-image no-select-image" />
                     <p>Global Chat</p>
-                </div>
+                </Link>
 
                 <hr className="scroll-hr"></hr>
 
                 {contacts.map((contact) => (
-                    <div 
+                    <Link 
                         key={contact.id} 
                         onClick={() => setCurrentContact(contact.id)} 
+                        to={`/contact/${contact.id}`}
                         className={`contact-card ${currentContact === contact.id ? 'active-contact' : ''}`}
                     >
-                        <img src="/public/profil.png" alt="Contact" className="contact-image no-select-image" />
+                        <img src="/profil.png" alt="Contact" className="contact-image no-select-image" />
                         <p>{contact.name}</p>
-                    </div>
+                    </Link>
                 ))}
 
             </div>

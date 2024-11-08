@@ -114,6 +114,8 @@ hr {
   display: flex;
   align-items: center; 
   gap: 10px;
+  text-decoration: none; 
+  color: inherit; 
 }
 
 .contact-card:hover {
@@ -144,5 +146,3 @@ hr {
 .no-select-image {
   pointer-events: none;
 }
- 
-  
