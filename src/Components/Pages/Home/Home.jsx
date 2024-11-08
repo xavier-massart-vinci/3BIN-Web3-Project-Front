@@ -42,7 +42,7 @@ function Home() {
 
   // Send message to the server
   const sendMessage = () =>{
-    socket.emit("globalChatMessage", message);
+    socket.emit("globalChatMessage", genMessageText("testUser", message));
     setMessage(""); // Clear the input
   } 
 
