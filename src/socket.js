@@ -7,5 +7,6 @@ export const socket = io( URL, {
   autoConnect: false,
   auth: {
     token: localStorage.getItem('token')
-  }
+  },
+  reconnection: true,
 });
