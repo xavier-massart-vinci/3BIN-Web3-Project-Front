@@ -2,11 +2,23 @@ import { useOutletContext } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { socket } from "../../../socket";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
+
+function genMessageText(author, content) {
+  return {
+    id: uuidv4(),
+    author,
+    content,
+    type: "text",
+  };
+  
+}
+
 
 function Home() {
   const navigate  = useNavigate();
   const { isConnected } = useOutletContext();
-  const [globatChatMessage, setGlobalChatMessage] = useState(["test","loris"]);
+  const [globalChatMessage, setGlobalChatMessage] = useState([genMessageText("DDD", "TG"), genMessageText("Lucas", "OK")]);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -19,8 +31,7 @@ function Home() {
   // Listen to the server
   useEffect(() => {
     const handleGlobalChatMessage = (message) => {
-      console.log(message.user); // {user: "user", msg: "message"} 
-      setGlobalChatMessage((prev) => [...prev, message.msg]);
+      setGlobalChatMessage((prev) => [...prev, genMessageText(message.user, message.content)]);
     };
 
     socket.on("globalChatMessage", handleGlobalChatMessage);
@@ -44,11 +55,8 @@ function Home() {
       <div>
       <p>Socket is connected ?  {isConnected ? "yes": "no"}</p>
       <button onClick={() => socket.connect()}>Se connecter</button>
-        <div>
-          {globatChatMessage.map((message, index) => (
-            <div key={index}>{message}</div>
-          ))}
-        </div>
+      <button onClick={() => socket.disconnect()}>Se deconnecter</button>
+      <div> {globalChatMessage.map((message) => ( <div key={message.id}> <strong>{message.author}:</strong> {message.content} </div> ))} </div>
         <div>
           <input type="text" onChange={handleInputMessage} value={message} />
           <button onClick={() => sendMessage()}>Send</button>
