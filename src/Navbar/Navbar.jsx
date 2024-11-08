@@ -52,38 +52,37 @@ const Navbar = () => {
     const [currentContact, setCurrentContact] = useState(0);
 
     return (
-        <div className="navbar no-select">
-
-            <div className="profile-section">
-                <img src="/public/profil.png" alt="Profile" className="profile-image no-select-image" />
-                <h4 className="profile-username">Username</h4>
+        <div className="navbar">
+            <div className="navbar-profile-section">
+                <img src="/public/profil.png" alt="Profile" className="navbar-profile-image navbar-no-select-image" />
+                <h4 className="navbar-profile-username">Username</h4>
             </div>
 
-            <div className="menu-section">
+            <div className="navbar-menu-section navbar-no-select">
                 <h2 className="navbar-title-contacts">Contacts</h2>
-                <hr className="section-hr"></hr>
+                <hr className="navbar-hr navbar-section-hr"></hr>
             </div>
 
-            <div className="menu-scroll">
+            <div className="navbar-menu-scroll navbar-no-select">
                 <Link
                     onClick={() => setCurrentContact(0)} 
                     to={`/contact/0`}
-                    className={`contact-card ${currentContact === 0 ? 'active-contact' : ''}`}
+                    className={`navbar-contact-card ${currentContact === 0 ? 'navbar-active-contact' : ''}`}
                 >
-                    <img src="/group.png" alt="Contact" className="contact-image no-select-image" />
+                    <img src="/group.png" alt="Contact" className="navbar-contact-image navbar-no-select-image" />
                     <p>Global Chat</p>
                 </Link>
 
-                <hr className="scroll-hr"></hr>
+                <hr className="navbar-hr navbar-scroll-hr"></hr>
 
                 {contacts.map((contact) => (
                     <Link 
                         key={contact.id} 
                         onClick={() => setCurrentContact(contact.id)} 
                         to={`/contact/${contact.id}`}
-                        className={`contact-card ${currentContact === contact.id ? 'active-contact' : ''}`}
+                        className={`navbar-contact-card ${currentContact === contact.id ? 'navbar-active-contact' : ''}`}
                     >
-                        <img src="/profil.png" alt="Contact" className="contact-image no-select-image" />
+                        <img src="/profil.png" alt="Contact" className="navbar-contact-image navbar-no-select-image" />
                         <p>{contact.name}</p>
                     </Link>
                 ))}

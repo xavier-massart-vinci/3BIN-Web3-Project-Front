@@ -18,16 +18,16 @@ const router = createBrowserRouter([
         element: <Navigate to="/contact/0" replace />,
       },
       {
+        path: "*",
+        element: <Navigate to="/contact/0" replace />,
+      },
+      {
         path: "login",
         element: <Login />,
       },
       {
         path: "register",
         element: <Register />,
-      },
-      {
-        path: "*",
-        element: <Home />,
       },
       {
         element: <Home />,
