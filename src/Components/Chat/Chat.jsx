@@ -1,5 +1,6 @@
 import { useState, } from 'react';
 import { useMatch } from "react-router-dom";
+import ChatBox from '../ChatBox/ChatBox';
 import './Chat.css';
 
 const myUserIdHardcoded = 1;
@@ -61,22 +62,14 @@ function Chat() {
     };
 
     if (!userId) return (<div className="chat-container"><p>User not found</p></div>);
+    const hardcodedUserName = `Contact ${userId}`;
 
     const contactChat = hardcodedChats.find((chat) => chat.contactId.toString() === userId);
     if (!contactChat) return (<div className="chat-container"><p>User not found</p></div>);
 
     return (
         <div className="chat-container">
-            <div className="messages">
-                {contactChat?.messages
-                    .sort((a, b) => new Date(a.time) - new Date(b.time))
-                    .map(msg => (
-                        <div key={msg.id} className={`message ${msg.senderId === 0 ? 'sent' : 'received'}`}>
-                            <span>{msg.content}</span>
-                            <span className="time">{new Date(msg.time).toLocaleTimeString()}</span>
-                        </div>
-                    ))}
-            </div>
+        <ChatBox contactChat={contactChat} myUserId={myUserIdHardcoded} userName={hardcodedUserName} />
 
             <div className="message-bar">
                 <textarea
