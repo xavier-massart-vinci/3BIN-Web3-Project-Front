@@ -6,6 +6,7 @@ import App from './Components/Pages/App/App'
 import Home from './Components/Pages/Home/Home'
 import Login from './Components/Pages/Login/Login'
 import Register from './Components/Pages/Register/Register'
+import PrivateRoute from './Components/PrivateRoute/PrivateRoute'
 import Chat from './Components/Chat/Chat'
 
 const router = createBrowserRouter([
@@ -14,12 +15,8 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "", 
-        element: <Navigate to="/contact/0" replace />,
-      },
-      {
-        path: "*",
-        element: <Navigate to="/contact/0" replace />,
+        path: "",
+        element: <PrivateRoute><Home /></PrivateRoute>,
       },
       {
         path: "login",
@@ -30,13 +27,8 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        element: <Home />,
-        children: [
-          {
-            path: "contact/:userId",
-            element: <Chat />,
-          },
-        ]
+        path: "*",
+        element: <PrivateRoute><Home /></PrivateRoute>,
       },
     ],
   },
