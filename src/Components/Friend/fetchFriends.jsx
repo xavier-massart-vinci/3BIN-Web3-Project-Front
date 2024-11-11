@@ -1,10 +1,11 @@
 import axios from 'axios';
-import config from '../../utlis/config'; // Update this path according to your project structure
+
+const BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 // Function to fetch the friends list
 const fetchFriends = async (setFriends) => {
     try {
-        const response = await axios.get(`${config.BASE_URL}/friends/getFriends`, {
+        const response = await axios.get(`${BASE_URL}/friends/getFriends`, {
             headers: {
                 'Authorization': `${localStorage.getItem('token')}`,
             },

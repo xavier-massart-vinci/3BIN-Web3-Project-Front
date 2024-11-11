@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import FriendList from '../../Friend/FriendList'; // Import FriendList component
-import AddFriend from '../../Friend/AddFriends';   // Import AddFriend component
-import fetchFriends from '../../Friend/fetchFriends'; // Import fetchFriends utility
+import FriendList from '../../Friend/FriendList';
+import AddFriend from '../../Friend/AddFriends';
+import fetchFriends from '../../Friend/fetchFriends';
 
 const FriendsPage = () => {
     const [friends, setFriends] = useState([]);
@@ -13,8 +13,8 @@ const FriendsPage = () => {
 
     return (
         <div>
-            <AddFriend setFriends={setFriends} /> {/* Pass setFriends to AddFriend */}
-            <FriendList friends={friends} setFriends={setFriends} /> {/* Pass both friends and setFriends to FriendList */}
+            <AddFriend setFriends={setFriends} />
+            <FriendList friends={friends} setFriends={setFriends} />
         </div>
     );
 };

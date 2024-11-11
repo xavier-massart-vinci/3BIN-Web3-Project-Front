@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import config from '../../utlis/config';
 import { FaUserPlus } from 'react-icons/fa'; // For the add friend icon
 import fetchFriends from './fetchFriends'; // Import the fetchFriends function
 import './AddFriend.css';
+
+const BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 const AddFriend = ({ setFriends }) => {
     const [username, setUsername] = useState('');
@@ -12,7 +13,7 @@ const AddFriend = ({ setFriends }) => {
 
     useEffect(() => {
         if (username.length > 2) {
-            axios.get(`${config.BASE_URL}/friends/search?username=${username}`, {
+            axios.get(`${BASE_URL}/friends/search?username=${username}`, {
                 headers: {
                     'Authorization': `${localStorage.getItem('token')}`
                 }
@@ -32,7 +33,7 @@ const AddFriend = ({ setFriends }) => {
         // Reset error message before making a new request
         setErrorMessage('');
 
-        axios.post(`${config.BASE_URL}/friends/addFriend`, {
+        axios.post(`${BASE_URL}/friends/addFriend`, {
             username: friendUsername // Only the username is needed here
         }, {
             headers: {

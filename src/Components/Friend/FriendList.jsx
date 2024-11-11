@@ -1,13 +1,14 @@
 import axios from 'axios';
-import config from '../../utlis/config';
 import fetchFriends from './fetchFriends'; // Import the fetchFriends function
 import './FriendList.css';  // Import CSS for styling
+
+const BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 const FriendList = ({ friends, setFriends }) => {
 
     // Function to delete a friend
     const deleteFriend = (friendUsername) => {
-        axios.post(`${config.BASE_URL}/friends/deleteFriend`, {
+        axios.post(`${BASE_URL}/friends/deleteFriend`, {
             username: friendUsername // Only the username is needed here
         }, {
             headers: {
