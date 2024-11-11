@@ -1,24 +1,9 @@
-import { useState, useEffect } from 'react';
 import axios from 'axios';
 import config from '../../utlis/config';
+import fetchFriends from './fetchFriends'; // Import the fetchFriends function
 import './FriendList.css';  // Import CSS for styling
 
-const FriendList = () => {
-    const [friends, setFriends] = useState([]);
-
-    useEffect(() => {
-        // Fetch friends list from the backend
-        axios.get(`${config.BASE_URL}/friends/getFriends`, {
-            headers: {
-                'Authorization': `${localStorage.getItem('token')}`
-            }
-        })
-            .then(response => {
-                console.log(response.data);
-                setFriends(response.data);
-            })
-            .catch(error => console.error('Error fetching friends list:', error));
-    }, []);
+const FriendList = ({ friends, setFriends }) => {
 
     // Function to delete a friend
     const deleteFriend = (friendUsername) => {
@@ -30,36 +15,43 @@ const FriendList = () => {
             }
 
         })
-            .then(response => console.log('Friend added:', response.data))
+            .then(response => {
+                console.log('Friend added:', response.data)
+                fetchFriends(setFriends)
+            })
             .catch(error => console.error('Error deleting friend:', error));
     };
 
     return (
         <div className="friend-list-container">  
             <div className="friend-list-box">
-                <table className="friend-list-table">
-                    <thead>
-                        <tr>
-                            <th>Friend list</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {friends.map(friend => (
-                            <tr key={friend.id} className="friend-list-row">
-                                <td>{friend.username}</td>
-                                <td>
-                                    <button 
-                                        className="delete-button"
-                                        onClick={() => deleteFriend(friend.username)}
-                                    >
-                                        🗑️
-                                    </button>
-                                </td>
+            {friends.length === 0 ? (
+                    <p className="no-friends-message">You don't have any friends</p>
+                ) : (
+                    <table className="friend-list-table">
+                        <thead>
+                            <tr>
+                                <th>Friend List</th>
+                                <th>Actions</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {friends.map(friend => (
+                                <tr key={friend.id} className="friend-list-row">
+                                    <td>{friend.username}</td>
+                                    <td>
+                                        <button 
+                                            className="delete-button"
+                                            onClick={() => deleteFriend(friend.username)}
+                                        >
+                                            🗑️
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
             </div>
         </div>
     );

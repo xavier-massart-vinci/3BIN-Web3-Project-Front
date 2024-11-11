@@ -1,0 +1,75 @@
+/* General styling for the add-friend container */
+
+.search-bar {
+  width: 100%;
+  max-width: 300px;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.search-bar:focus {
+  border-color: #000; /* Black border on focus */
+  outline: none;
+}
+
+.suggestions-list {
+  list-style-type: none;
+  max-width: 300px;
+  padding: 0;
+  margin: 0;
+  max-height: 100px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+}
+
+.suggestion-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  font-size: 1rem;
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s ease;
+}
+
+.suggestion-item:hover {
+  background-color: #f1f1f1; /* Light gray on hover */
+  cursor: pointer;
+}
+
+.add-icon {
+  padding-left: 20px;
+  font-size: 1.2rem;
+  color: #000;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.add-icon:hover {
+  color: #007bff; /* Blue color on hover */
+}
+
+/* Scrollbar Styling */
+.suggestions-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.suggestions-list::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+  border-radius: 10px;
+}
+
+.suggestions-list::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}

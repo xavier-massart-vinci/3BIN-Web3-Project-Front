@@ -2,8 +2,7 @@ import { useOutletContext } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { socket } from "../../../socket";
 import { useNavigate } from "react-router-dom";
-import AddFriend from "../../Friend/AddFriends";
-import FriendList from "../../Friend/FriendList";
+import FriendsPage from "../Friends/FriendsPage";
 
 function Home() {
   const navigate  = useNavigate();
@@ -55,8 +54,7 @@ function Home() {
           <input type="text" onChange={handleInputMessage} value={message} />
           <button onClick={() => sendMessage()}>Send</button>
         </div>
-        <AddFriend />
-        <FriendList />
+        <FriendsPage /> 
       </div>
     </>
   );
