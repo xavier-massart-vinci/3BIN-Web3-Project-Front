@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider, createBrowserRouter, Navigate  } from "react-router-dom";
+import { RouterProvider, createBrowserRouter  } from "react-router-dom";
 
 import App from './Components/Pages/App/App'
 import Home from './Components/Pages/Home/Home'
@@ -16,7 +16,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <PrivateRoute><Home /></PrivateRoute>,
+        element: <PrivateRoute/>,
+      },
+      {
+        path: "*",
+        element: <PrivateRoute/>,
       },
       {
         path: "login",
@@ -27,8 +31,13 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: "*",
-        element: <PrivateRoute><Home /></PrivateRoute>,
+        element: <Home />,
+        children: [
+          {
+            path: "contact/:userId",
+            element: <Chat />,
+          },
+        ]
       },
     ],
   },
