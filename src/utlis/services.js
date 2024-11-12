@@ -6,6 +6,7 @@ const register = async (payload) => {
   const value = await request.then(response => response.data);
   const token = value.token;
   localStorage.setItem('token', token);
+  localStorage.setItem('user', JSON.stringify(value.user));
   socket.auth = {token : token};
   socket.connect();
 };
@@ -15,6 +16,7 @@ const login = async (payload) => {
   const value =  await request.then(response => response.data);
   const token = value.token;
   localStorage.setItem('token', token);
+  localStorage.setItem('user', JSON.stringify(value.user));
   socket.auth = {token : token};
   socket.connect();
 };

@@ -1,9 +1,8 @@
-import { useState, } from 'react';
-import { useMatch } from "react-router-dom";
+import { useContext, useState, } from 'react';
+import { useMatch, useOutletContext } from "react-router-dom";
 import ChatBox from '../ChatBox/ChatBox';
 import './Chat.css';
 
-const myUserIdHardcoded = 1;
 const hardcodedChats = [
     {
         contactId: 0,
@@ -22,17 +21,23 @@ const hardcodedChats = [
         ],
     },
 ];
-      
 
 function Chat() {
     const [message, setMessage] = useState('');
+    const { sendMessage, chatMessages, userConnectedList } = useOutletContext();
 
-    const match = useMatch("/contact/:userId");
+    const match = useMatch("/chat/:userId");
     const userId = match?.params.userId;
 
-    const sendMessage = () => {
-        const contactChat = hardcodedChats.find((chat) => chat.contactId.toString() === userId);
-        contactChat.messages.push({ id: contactChat.messages[contactChat.messages.length-1].id +1, senderId: myUserIdHardcoded, content: message, time: new Date().toISOString() });
+    if (!userId) return (<div className="chat-container"><p>User not found</p></div>);
+    const username = `Contact ${userId}`;
+
+    console.log(userConnectedList);
+    const contactChat = chatMessages[userConnectedList.find((u) => u.id === userId).socketId];
+    if (!contactChat) return (<div className="chat-container"><p>User not found</p></div>);
+
+    const handleMessage = (message) => {
+        sendMessage(JSON.parse(localStorage.getItem("user")).id, userId, message);
         setMessage('');
     };
     
@@ -43,15 +48,9 @@ function Chat() {
         }
     };
 
-    if (!userId) return (<div className="chat-container"><p>User not found</p></div>);
-    const hardcodedUserName = `Contact ${userId}`;
-
-    const contactChat = hardcodedChats.find((chat) => chat.contactId.toString() === userId);
-    if (!contactChat) return (<div className="chat-container"><p>User not found</p></div>);
-
     return (
         <div className="chat-container">
-            <ChatBox contactChat={contactChat} myUserId={myUserIdHardcoded} userName={hardcodedUserName} />
+            <ChatBox contactChat={contactChat} myUserId={JSON.parse(localStorage.getItem("user")).id} userName={username} />
 
             <div className="message-bar">
                 <textarea
@@ -62,7 +61,7 @@ function Chat() {
                     onKeyDown={handleKeyDown}
                     rows={1}
                 />
-                <button className="send-button" onClick={sendMessage}>➤</button>
+                <button className="send-button" onClick={handleMessage}>➤</button>
             </div>
         </div>
     );

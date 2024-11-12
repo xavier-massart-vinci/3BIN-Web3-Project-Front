@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import React, { useEffect } from 'react';
 import { socket } from "../../../socket";
- 
+
 function App() {
   const [isConnected, setIsConnected] = React.useState(false);
 
@@ -22,7 +22,6 @@ function App() {
       socket.off("disconnect");
     };
   });
-
 
   const context = {
     isConnected

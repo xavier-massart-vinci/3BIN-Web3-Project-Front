@@ -1,52 +1,79 @@
-import Navbar from "../../../Navbar/Navbar";
+import Navbar from "../../Navbar/Navbar";
 import { Outlet } from "react-router-dom";
-import "./Home.css";
-
-import { useOutletContext } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { socket } from "../../../socket";
-import { useNavigate } from "react-router-dom";
+import "./Home.css";
 
 function Home() {
-  const navigate  = useNavigate();
-  const { isConnected } = useOutletContext();
-  const [globatChatMessage, setGlobalChatMessage] = useState(["test","loris"]);
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    if (localStorage.getItem('token') == null) {
-      navigate('/login');
-    }
-  }, [navigate]);
-
+  const [userConnectedList, setUserConnectedList] = useState([{socketId: 0, id: 0}, {socketId: 1, id: 1}]);
+  const [chatMessages, setChatMessages] = useState([]);
 
   // Listen to the server
   useEffect(() => {
-    const handleGlobalChatMessage = (message) => {
-      console.log(message.user); // {user: "user", msg: "message"} 
-      setGlobalChatMessage((prev) => [...prev, message.msg]);
+    const handleUserDiscoveryInit = (usersConnectedTable) => {
+      setUserConnectedList(usersConnectedTable);
     };
 
-    socket.on("globalChatMessage", handleGlobalChatMessage);
+    const handleUserDiscovery = (user) => {
+      setUserConnectedList((prev) => [...prev, user]);
+    };
+
+    const handleUserDisconnect = (user) => {
+      setUserConnectedList((prev) => prev.filter((u) => u.id !== user.id));
+    };
+
+    const handleChatMessage = (messageFormatted) => {
+      const userId = messageFormatted.from;
+      const socketId = userConnectedList.find((u) => u.id === userId).socketId;
+      const chat = chatMessages[socketId];
+
+      if (chat) {
+        chat.messages.push(messageFormatted);
+      } else {
+        setChatMessages((prev) => ({
+          ...prev,
+          [socketId]: { messages: [messageFormatted] }
+        }));
+      }
+    };
+
+    socket.on("globalChatMessage", handleChatMessage);
+    socket.on("privateChatMessage", handleChatMessage);
+    socket.on("userDiscoveryInit", handleUserDiscoveryInit);
+    socket.on("userDiscovery", handleUserDiscovery);
+    socket.on("userDisconnect", handleUserDisconnect);
+
     return () => { 
-      socket.off("globalChatMessage", handleGlobalChatMessage);
+      socket.off("globalChatMessage", handleChatMessage);
+      socket.off("privateChatMessage", handleChatMessage);
+      socket.off("userDiscoveryInit", handleUserDiscoveryInit);
+      socket.off("userDiscovery", handleUserDiscovery);
+      socket.off("userDisconnect", handleUserDisconnect);
     };
   }, []);
 
-  // Send message to the server
-  const sendMessage = () =>{
-    socket.emit("globalChatMessage", message);
-    setMessage(""); // Clear the input
+  const sendMessage = (fromUserId, toUserId, content) => {
+    let toSocketId = userConnectedList.find((u) => u.id === toUserId).socketId;
+    if (!toSocketId) toSocketId = 0;
+    const messageFormatted = {from: fromUserId, to: toSocketId, content, type: "text"};
+
+    if (toUserId === 0) {
+      socket.emit("globalChatMessage", messageFormatted);
+    } else {
+      socket.emit("privateChatMessage", messageFormatted);
+    }
   } 
 
-  const handleInputMessage = (e) => {
-    setMessage(e.target.value);
-  }
+  const context = {
+    sendMessage,
+    chatMessages,
+    userConnectedList,
+  };
 
   return (
     <div>
       <Navbar/>
-      <Outlet/>
+      <Outlet context={context}/>
     </div>
   );
 }

@@ -31,10 +31,10 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        element: <Home />,
+        element: <PrivateRoute><Home/></PrivateRoute>,
         children: [
           {
-            path: "contact/:userId",
+            path: "chat/:userId",
             element: <Chat />,
           },
         ]

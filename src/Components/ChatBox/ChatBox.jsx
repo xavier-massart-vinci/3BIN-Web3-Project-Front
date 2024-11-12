@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import './ChatBox.css';
 
-function ChatComponent({ contactChat, myUserId, userName }) {
+function ChatBox({ contactChat, myUserId, userName }) {
     const messagesEndRef = useRef(null);
 
     const getTimeDifferenceInMinutes = (date1, date2) => {
@@ -50,4 +50,4 @@ function ChatComponent({ contactChat, myUserId, userName }) {
     );
 }
 
-export default ChatComponent;
+export default ChatBox;
