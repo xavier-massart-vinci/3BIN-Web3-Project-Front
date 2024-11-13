@@ -1,7 +1,8 @@
-import { useContext, useState, } from 'react';
-import { useMatch, useOutletContext } from "react-router-dom";
+import { useContext, useEffect, useState, } from 'react';
+import { Navigate, useMatch, useOutletContext } from "react-router-dom";
 import ChatBox from '../ChatBox/ChatBox';
 import './Chat.css';
+import { connect } from 'socket.io-client';
 
 const hardcodedChats = [
     {
@@ -25,32 +26,46 @@ const hardcodedChats = [
 function Chat() {
     const [message, setMessage] = useState('');
     const { sendMessage, chatMessages, userConnectedList } = useOutletContext();
+    let isGlobalChat = false;
+    const myUserId = JSON.parse(localStorage.getItem("user")).id;
 
     const match = useMatch("/chat/:userId");
-    const userId = match?.params.userId;
+    const userIdOfContact = match?.params.userId;
+    let contactChat;
 
-    if (!userId) return (<div className="chat-container"><p>User not found</p></div>);
-    const username = `Contact ${userId}`;
+    if (userIdOfContact === "0") isGlobalChat = true;
 
-    console.log(userConnectedList);
-    const contactChat = chatMessages[userConnectedList.find((u) => u.id === userId).socketId];
-    if (!contactChat) return (<div className="chat-container"><p>User not found</p></div>);
+
+    if(isGlobalChat){ 
+        contactChat = chatMessages[userConnectedList.find((u) => u.user.id === "0")];
+    }else{
+        // Get the chat id in the table with the contact
+        const idOfChat = userConnectedList.find((u) => u.user.id === userIdOfContact);
+        if(idOfChat === undefined){ 
+            return (<p>Chat not found</p>);
+            //return (<Navigate to="/char/0"/>); // TOFIX : Redirect to the global chat
+        }
+        contactChat = chatMessages[idOfChat];
+    }
+
+
 
     const handleMessage = (message) => {
-        sendMessage(JSON.parse(localStorage.getItem("user")).id, userId, message);
+        sendMessage(myUserId, isGlobalChat ? "0" : userIdOfContact, message);
         setMessage('');
     };
     
     const handleKeyDown = (event) => {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault(); 
-            sendMessage(); 
+            handleMessage(message);
         }
     };
 
+    //TODO userName change for global chat don't work fetch the id in message and get the username
     return (
         <div className="chat-container">
-            <ChatBox contactChat={contactChat} myUserId={JSON.parse(localStorage.getItem("user")).id} userName={username} />
+            <ChatBox contactChat={contactChat} myUserId={myUserId} userName={"ddd"} />
 
             <div className="message-bar">
                 <textarea

@@ -5,13 +5,15 @@ import { socket } from "../../../socket";
 import "./Home.css";
 
 function Home() {
-  const [userConnectedList, setUserConnectedList] = useState([{socketId: 0, id: 0}, {socketId: 1, id: 1}]);
-  const [chatMessages, setChatMessages] = useState([]);
+  const [userConnectedList, setUserConnectedList] = useState([]);
+  const [chatMessages, setChatMessages] = useState({["0"]: {messages: []}});
+  const [loading, setLoading] = useState(true);
 
   // Listen to the server
   useEffect(() => {
     const handleUserDiscoveryInit = (usersConnectedTable) => {
       setUserConnectedList(usersConnectedTable);
+      setLoading(false);
     };
 
     const handleUserDiscovery = (user) => {
@@ -53,16 +55,19 @@ function Home() {
   }, []);
 
   const sendMessage = (fromUserId, toUserId, content) => {
-    let toSocketId = userConnectedList.find((u) => u.id === toUserId).socketId;
-    if (!toSocketId) toSocketId = 0;
-    const messageFormatted = {from: fromUserId, to: toSocketId, content, type: "text"};
+    const messageFormatted = { from: fromUserId, to: toUserId, content, type: "text" };
 
-    if (toUserId === 0) {
+    if (toUserId === "0") {
       socket.emit("globalChatMessage", messageFormatted);
-    } else {
-      socket.emit("privateChatMessage", messageFormatted);
+      return;
     }
-  } 
+
+    const user = userConnectedList.find((u) => u.user.id === toUserId);
+    const toSocketId = user.socketId;  
+    const privateMessage = { ...messageFormatted, to: toSocketId };
+    socket.emit("privateChatMessage", privateMessage);
+  };
+
 
   const context = {
     sendMessage,
@@ -71,10 +76,19 @@ function Home() {
   };
 
   return (
-    <div>
-      <Navbar/>
-      <Outlet context={context}/>
-    </div>
+    <>
+    {
+      loading ? 
+      <p>Loading...</p> : 
+      <>
+      <div>
+        <Navbar/>
+        <Outlet context={context}/>
+      </div>
+      </>
+    }
+    </>
+   
   );
 }
 

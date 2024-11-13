@@ -10,12 +10,13 @@ const contacts = [
 
 const Navbar = () => {
     const [currentContact, setCurrentContact] = useState(0);
+    const username = JSON.parse(localStorage.getItem("user")).username;
 
     return (
         <div className="navbar">
             <div className="navbar-profile-section">
                 <img src="/public/profil.png" alt="Profile" className="navbar-profile-image navbar-no-select-image" />
-                <h4 className="navbar-profile-username">Username</h4>
+                <h4 className="navbar-profile-username">{username}</h4>
             </div>
 
             <div className="navbar-menu-section navbar-no-select">
