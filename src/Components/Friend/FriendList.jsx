@@ -2,7 +2,7 @@ import axios from 'axios';
 import fetchFriends from './fetchFriends'; // Import the fetchFriends function
 import './FriendList.css';  // Import CSS for styling
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const FriendList = ({ friends, setFriends }) => {
 
@@ -17,8 +17,8 @@ const FriendList = ({ friends, setFriends }) => {
 
         })
             .then(response => {
-                console.log('Friend added:', response.data)
-                fetchFriends(setFriends)
+                console.log('Friend added:', response.data);
+                fetchFriends(setFriends);
             })
             .catch(error => console.error('Error deleting friend:', error));
     };
@@ -27,7 +27,7 @@ const FriendList = ({ friends, setFriends }) => {
         <div className="friend-list-container">  
             <div className="friend-list-box">
             {friends.length === 0 ? (
-                    <p className="no-friends-message">You don't have any friends</p>
+                    <p className="no-friends-message">You don&apos;t have any friends</p>
                 ) : (
                     <table className="friend-list-table">
                         <thead>

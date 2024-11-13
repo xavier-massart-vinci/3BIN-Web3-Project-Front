@@ -4,7 +4,7 @@ import { FaUserPlus } from 'react-icons/fa'; // For the add friend icon
 import fetchFriends from './fetchFriends'; // Import the fetchFriends function
 import './AddFriend.css';
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const AddFriend = ({ setFriends }) => {
     const [username, setUsername] = useState('');
@@ -40,11 +40,10 @@ const AddFriend = ({ setFriends }) => {
                 'Authorization': `${localStorage.getItem('token')}`
             }
         })
-            .then(response => {
-                console.log('Friend added:', response.data)
-                fetchFriends(setFriends)
-                setUsername('')
-                setSuggestions([])
+            .then(() => {
+                fetchFriends(setFriends);
+                setUsername('');
+                setSuggestions([]);
             })
             .catch(error => {
                 // Handle errors based on the status code
