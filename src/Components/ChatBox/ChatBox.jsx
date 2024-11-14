@@ -1,20 +1,65 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './ChatBox.css';
+import { socket } from '../../socket';
 
-function ChatBox({ contactChat, myUserId, userName }) {
-    const messagesEndRef = useRef(null);
-
-    const getTimeDifferenceInMinutes = (date1, date2) => {
-        return (new Date(date2) - new Date(date1)) / 1000 / 60;
-    };
+function ChatBox({ contact }) {
+    const myUserId = JSON.parse(localStorage.getItem("user")).id;
+    const [contactChat, setContactChat] = useState([]);
+    let chatType = "globalChatMessage";
+    let msg = {inGlobalChat: contact === undefined};
+    
+    if(contact !== undefined){
+        chatType = "privateChatMessage";
+        msg.contact = contact.user.id;
+    }
 
     useEffect(() => {
+       
+        socket.emit('chatHistory', msg);
+
+        socket.on('chatHistory', (history) => {
+            if(history.length > 0){
+                setContactChat(history);
+            }
+        })
+
+        socket.on(chatType, (message) => {
+            setContactChat((prev) => [...prev, message]);  
+        });
+
+        return () => {
+            socket.off(chatType);
+            socket.off("chatHistory");
+        };
+
+    }, [contact]);
+
+    const messagesEndRef = useRef(null);
+
+    useEffect(() => {
+        // Scroll automatique vers le bas quand un nouveau message est ajouté
         messagesEndRef.current?.scrollIntoView();
     }, [contactChat]);
 
     return (
         <div className="chatbox-messages">
-            {contactChat?.messages && contactChat.messages.length > 0 ? (
+            {contactChat.map((item, index) => (
+                <div key={index} className="message">
+                    <p><strong>From:</strong> {item.from}</p>
+                    <p><strong>To:</strong> {item.to}</p>
+                    <p><strong>Content:</strong> {item.content}</p>
+                    <p><strong>Type:</strong> {item.type}</p>
+                </div>
+            ))}
+            <div ref={messagesEndRef} />
+        </div>
+    );
+}
+
+export default ChatBox;
+
+
+/* {contactChat?.messages && contactChat.messages.length > 0 ? (
                 contactChat.messages
                     .sort((a, b) => new Date(a.time) - new Date(b.time))
                     .map((msg, index, messages) => {
@@ -49,11 +94,4 @@ function ChatBox({ contactChat, myUserId, userName }) {
                 <div className="chatbox-no-messages">
                    
                 </div>
-            )}
-
-            <div ref={messagesEndRef} />
-        </div>
-    );
-}
-
-export default ChatBox;
+            )} */

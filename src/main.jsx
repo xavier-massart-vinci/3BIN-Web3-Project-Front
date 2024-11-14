@@ -8,6 +8,7 @@ import Login from './Components/Pages/Login/Login'
 import Register from './Components/Pages/Register/Register'
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute'
 import Chat from './Components/Chat/Chat'
+import Navbar from "./Components/Navbar/Navbar";
 
 const router = createBrowserRouter([
   {
@@ -34,8 +35,11 @@ const router = createBrowserRouter([
         element: <PrivateRoute><Home/></PrivateRoute>,
         children: [
           {
-            path: "chat/:userId",
-            element: <Chat />,
+            path: "chat/:userId?",
+            element: <>
+              <Navbar />
+              <Chat />
+            </>,
           },
         ]
       },

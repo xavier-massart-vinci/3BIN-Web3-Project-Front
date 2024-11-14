@@ -1,57 +1,35 @@
-import { useContext, useEffect, useState, } from 'react';
-import { Navigate, useMatch, useOutletContext } from "react-router-dom";
+import {  useState, } from 'react';
+import {  useMatch, useOutletContext } from "react-router-dom";
 import ChatBox from '../ChatBox/ChatBox';
 import './Chat.css';
-import { connect } from 'socket.io-client';
+import { socket } from '../../socket';
 
-const hardcodedChats = [
-    {
-        contactId: 0,
-        messages: [
-            { id: 1, senderId: 0, content: "Salut", time: "2024-11-08T10:05:00Z" },
-            { id: 2, senderId: 1, content: "Hello", time: "2024-11-08T10:06:00Z" },
-            { id: 3, senderId: 0, content: "Comment ça va ?", time: "2024-11-08T10:07:00Z" },
-            { id: 4, senderId: 1, content: "Bien et toi ?", time: "2024-11-08T10:08:00Z" },
-            { id: 5, senderId: 0, content: "Je vais bien", time: "2024-11-08T10:09:00Z" },
-            { id: 6, senderId: 1, content: "Cool", time: "2024-11-08T10:10:00Z" },
-            { id: 7, senderId: 0, content: "Tu fais quoi ?", time: "2024-11-08T10:11:00Z" },
-            { id: 8, senderId: 1, content: "Je travaille", time: "2024-11-08T10:12:00Z" },
-            { id: 9, senderId: 0, content: "Ok", time: "2024-11-08T10:13:00Z" },
-            { id: 10, senderId: 1, content: "A plus", time: "2024-11-08T10:14:00Z" },
-            { id: 11, senderId: 0, content: "A plus", time: "2024-11-08T10:15:00Z" },
-        ],
-    },
-];
 
 function Chat() {
-    const [message, setMessage] = useState('');
-    const { sendMessage, chatMessages, userConnectedList } = useOutletContext();
-    let isGlobalChat = false;
-    const myUserId = JSON.parse(localStorage.getItem("user")).id;
-
+    const [ message, setMessage ] = useState('');
+    const { userConnectedList } = useOutletContext();
     const match = useMatch("/chat/:userId");
-    const userIdOfContact = match?.params.userId;
-    let contactChat;
+    let contactChatId = match?.params.userId;
+    let contact = undefined;
 
-    if (userIdOfContact === "0") isGlobalChat = true;
-
-
-    if(isGlobalChat){ 
-        contactChat = chatMessages[userConnectedList.find((u) => u.user.id === "0")];
-    }else{
-        // Get the chat id in the table with the contact
-        const idOfChat = userConnectedList.find((u) => u.user.id === userIdOfContact);
-        if(idOfChat === undefined){ 
-            return (<p>Chat not found</p>);
-            //return (<Navigate to="/char/0"/>); // TOFIX : Redirect to the global chat
-        }
-        contactChat = chatMessages[idOfChat];
+    if(contactChatId !== undefined){ // don't check if global chat
+        // security check
+        contact =  userConnectedList.find((u) => u.user.id === contactChatId); 
+     if(contactChatId === undefined){
+        return ("<p>User not found</p>");
+     }
     }
 
-
-
     const handleMessage = (message) => {
-        sendMessage(myUserId, isGlobalChat ? "0" : userIdOfContact, message);
+        if(message === '') return;
+        const fromUserId = JSON.parse(localStorage.getItem("user")).id;
+        const messageFormatted = { from: fromUserId,  content: message, type: "text"};
+        
+        if(contactChatId === undefined){
+            socket.emit("globalChatMessage", {...messageFormatted, to: "global", toSocket: "global"});
+        }else{
+            socket.emit("privateChatMessage", {...messageFormatted, to: contact.user.id, toSocket: contact.socketId});
+        }
         setMessage('');
     };
     
@@ -62,10 +40,10 @@ function Chat() {
         }
     };
 
-    //TODO userName change for global chat don't work fetch the id in message and get the username
     return (
         <div className="chat-container">
-            <ChatBox contactChat={contactChat} myUserId={myUserId} userName={"ddd"} />
+            
+            <ChatBox contact={contact} />
 
             <div className="message-bar">
                 <textarea

@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import './Navbar.css';
 
-const contacts = [
-    { id: 2, name: "Contact 2" },
-    { id: 3, name: "Contact 3" },
-    { id: 4, name: "Contact 4" },
-];
 
 const Navbar = () => {
     const [currentContact, setCurrentContact] = useState(0);
     const username = JSON.parse(localStorage.getItem("user")).username;
+    const { userConnectedList } = useOutletContext();
+    const userId = JSON.parse(localStorage.getItem("user")).id;
+
+    console.log(userConnectedList)
 
     return (
         <div className="navbar">
@@ -27,7 +26,7 @@ const Navbar = () => {
             <div className="navbar-menu-scroll navbar-no-select">
                 <Link
                     onClick={() => setCurrentContact(0)} 
-                    to={`/chat/0`}
+                    to={`/chat`}
                     className={`navbar-contact-card ${currentContact === 0 ? 'navbar-active-contact' : ''}`}
                 >
                     <img src="/group.png" alt="Contact" className="navbar-contact-image navbar-no-select-image" />
@@ -36,15 +35,17 @@ const Navbar = () => {
 
                 <hr className="navbar-hr navbar-scroll-hr"></hr>
 
-                {contacts.map((contact) => (
+                {userConnectedList
+                .filter(contact => contact.user.id !== userId) // remove self from contact list
+                .map((contact) => (
                     <Link 
-                        key={contact.id} 
-                        onClick={() => setCurrentContact(contact.id)} 
-                        to={`/chat/${contact.id}`}
-                        className={`navbar-contact-card ${currentContact === contact.id ? 'navbar-active-contact' : ''}`}
+                        key={contact.user.id} 
+                        onClick={() => setCurrentContact(contact.user.id)} 
+                        to={`/chat/${contact.user.id}`}
+                        className={`navbar-contact-card ${currentContact === contact.user.id ? 'navbar-active-contact' : ''}`}
                     >
                         <img src="/profil.png" alt="Contact" className="navbar-contact-image navbar-no-select-image" />
-                        <p>{contact.name}</p>
+                        <p>{contact.user.username}</p>
                     </Link>
                 ))}
 
