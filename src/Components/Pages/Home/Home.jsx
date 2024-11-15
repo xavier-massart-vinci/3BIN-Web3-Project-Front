@@ -1,10 +1,12 @@
-import Navbar from "../../Navbar/Navbar";
 import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { socket } from "../../../socket";
+import axios from "axios";
+import Loading from "../../Loading/Loading";
 import "./Home.css";
 
 function Home() {
+  const [friendList, setFriendList] = useState([]);
   const [userConnectedList, setUserConnectedList] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -34,20 +36,29 @@ function Home() {
     };
   }, []);
 
+  // Fetch friend list from API
+  useEffect(() => {
+    axios
+    .get(`${import.meta.env.VITE_API_BASE_URL}/users`)
+    .then((response) => {
+      setFriendList(response.data);
+    })
+    .catch((error) => {
+      console.error("Error fetching friend list", error);
+    });
+  }, []);
+
   const context = {
     userConnectedList,
+    friendList,
   };
 
   return (
     <>
     {
       loading ? 
-      <p>Loading...</p> : 
-      <>
-      <div>
-        <Outlet context={context}/>
-      </div>
-      </>
+      <Loading /> : 
+      <Outlet context={context}/>
     }
     </>
    

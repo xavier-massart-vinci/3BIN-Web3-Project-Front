@@ -2,14 +2,11 @@ import { useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import './Navbar.css';
 
-
 const Navbar = () => {
     const [currentContact, setCurrentContact] = useState(0);
+    const { userConnectedList, friendList } = useOutletContext();
     const username = JSON.parse(localStorage.getItem("user")).username;
-    const { userConnectedList } = useOutletContext();
     const userId = JSON.parse(localStorage.getItem("user")).id;
-
-    console.log(userConnectedList)
 
     return (
         <div className="navbar">
@@ -19,7 +16,7 @@ const Navbar = () => {
             </div>
 
             <div className="navbar-menu-section navbar-no-select">
-                <h2 className="navbar-title-contacts">Contacts</h2>
+                <h2 className="navbar-title-contacts">Discussions</h2>
                 <hr className="navbar-hr navbar-section-hr"></hr>
             </div>
 
@@ -35,17 +32,20 @@ const Navbar = () => {
 
                 <hr className="navbar-hr navbar-scroll-hr"></hr>
 
-                {userConnectedList
-                .filter(contact => contact.user.id !== userId) // remove self from contact list
+                {friendList
+                .filter(contact => contact.id !== userId) // remove self from contact list
                 .map((contact) => (
                     <Link 
-                        key={contact.user.id} 
-                        onClick={() => setCurrentContact(contact.user.id)} 
-                        to={`/chat/${contact.user.id}`}
-                        className={`navbar-contact-card ${currentContact === contact.user.id ? 'navbar-active-contact' : ''}`}
+                        key={contact.id} 
+                        onClick={() => setCurrentContact(contact.id)} 
+                        to={`/chat/${contact.id}`}
+                        className={`navbar-contact-card ${currentContact === contact.id ? 'navbar-active-contact' : ''}`}
                     >
-                        <img src="/profil.png" alt="Contact" className="navbar-contact-image navbar-no-select-image" />
-                        <p>{contact.user.username}</p>
+                        <div className="navbar-contact-image-container">
+                            <img src="/profil.png" alt="Contact" className="navbar-contact-image navbar-no-select-image" />
+                            {userConnectedList.some(user => user.id === contact.id) && <div className="navbar-contact-image-status-online"></div>}
+                        </div>
+                        <p>{contact.username}</p>
                     </Link>
                 ))}
 
