@@ -1,60 +1,68 @@
-import { useOutletContext } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { socket } from "../../../socket";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Loading from "../../Loading/Loading";
+import "./Home.css";
 
 function Home() {
-  const navigate  = useNavigate();
-  const { isConnected } = useOutletContext();
-  const [globatChatMessage, setGlobalChatMessage] = useState(["test","loris"]);
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    if (localStorage.getItem('token') == null) {
-      navigate('/login');
-    }
-  }, [navigate]);
-
+  const [friendList, setFriendList] = useState([]);
+  const [userConnectedList, setUserConnectedList] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // Listen to the server
   useEffect(() => {
-    const handleGlobalChatMessage = (message) => {
-      console.log(message.user); // {user: "user", msg: "message"} 
-      setGlobalChatMessage((prev) => [...prev, message.msg]);
+    const handleUserDiscoveryInit = (usersConnectedTable) => {
+      setUserConnectedList(usersConnectedTable);
+      setLoading(false);
     };
 
-    socket.on("globalChatMessage", handleGlobalChatMessage);
+    const handleUserDiscovery = (user) => {
+      setUserConnectedList((prev) => [...prev, user]);
+    };
+
+    const handleUserDisconnect = (user) => {
+      setUserConnectedList((prev) => prev.filter((u) => u.id !== user.id));
+    };
+
+    socket.on("userDiscoveryInit", handleUserDiscoveryInit);
+    socket.on("userDiscovery", handleUserDiscovery);
+    socket.on("userDisconnect", handleUserDisconnect);
+
     return () => { 
-      socket.off("globalChatMessage", handleGlobalChatMessage);
+      socket.off("userDiscoveryInit", handleUserDiscoveryInit);
+      socket.off("userDiscovery", handleUserDiscovery);
+      socket.off("userDisconnect", handleUserDisconnect);
     };
   }, []);
 
-  // Send message to the server
-  const sendMessage = () =>{
-    socket.emit("globalChatMessage", message);
-    setMessage(""); // Clear the input
-  } 
+  // Fetch friend list from API
+  useEffect(() => {
+    axios
+    .get(`${import.meta.env.VITE_API_BASE_URL}/users`)
+    .then((response) => {
+      setFriendList(response.data);
+    })
+    .catch((error) => {
+      console.error("Error fetching friend list", error);
+    });
+  }, []);
 
-  const handleInputMessage = (e) => {
-    setMessage(e.target.value);
-  }
+  const context = {
+    userConnectedList,
+    friendList,
+  };
 
   return (
     <>
-      <div>
-      <p>Socket is connected ?  {isConnected ? "yes": "no"}</p>
-      <button onClick={() => socket.connect()}>Se connecter</button>
-        <div>
-          {globatChatMessage.map((message, index) => (
-            <div key={index}>{message}</div>
-          ))}
-        </div>
-        <div>
-          <input type="text" onChange={handleInputMessage} value={message} />
-          <button onClick={() => sendMessage()}>Send</button>
-        </div>
-      </div>
+    {
+      loading ? 
+      <Loading /> : 
+      <Outlet context={context}/>
+    }
     </>
+   
   );
 }
+
 export default Home;

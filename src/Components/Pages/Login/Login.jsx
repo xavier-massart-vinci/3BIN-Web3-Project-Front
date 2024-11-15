@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { useState } from "react";
-import { login } from "../../../utlis/services";
-import errorMapping from "../../../utlis/mapError";
+import { login } from "../../../utils/services";
+import errorMapping from "../../../utils/mapError";
 
 function Login() {
   const [username, setUsername] = useState("");
