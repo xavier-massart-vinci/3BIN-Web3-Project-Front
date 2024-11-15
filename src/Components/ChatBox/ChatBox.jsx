@@ -1,33 +1,27 @@
 import { useEffect, useRef, useState } from 'react';
-import {  useOutletContext } from "react-router-dom";
 import './ChatBox.css';
 import { socket } from '../../socket';
+import MessageCard from '../MessageCard/MessageCard';
 
-function ChatBox({ contact }) {
+function ChatBox({ currentContact }) {
     const [contactChat, setContactChat] = useState([]);
-    const { friendList } = useOutletContext();
 
     const myUserId = JSON.parse(localStorage.getItem("user")).id;
-    let chatType = "globalChatMessage";
-    let msg = {inGlobalChat: contact === undefined};
-    
-    if(contact !== undefined){
-        chatType = "privateChatMessage";
-        msg.contact = contact.id;
-    }
+    const isInGlobalChat = currentContact === undefined;
+    const chatType = isInGlobalChat ? "globalChatMessage" : "privateChatMessage";
 
     useEffect(() => {
        
-        socket.emit('chatHistory', msg);
+        socket.emit('chatHistory', {
+            inGlobalChat: isInGlobalChat, 
+            contact: isInGlobalChat ? null : currentContact.id 
+        });
 
         socket.on('chatHistory', (history) => {
-            if(history.length > 0){
-                setContactChat(history);
-            }
+            setContactChat(history);
         })
 
         socket.on(chatType, (message) => {
-            console.log("chatType", message);
             setContactChat((prev) => [...prev, message]);  
         });
 
@@ -36,7 +30,7 @@ function ChatBox({ contact }) {
             socket.off("chatHistory");
         };
 
-    }, [contact]);
+    }, [currentContact]);
 
     const messagesEndRef = useRef(null);
 
@@ -49,45 +43,24 @@ function ChatBox({ contact }) {
         return (new Date(date2) - new Date(date1)) / 1000 / 60;
     };
 
+    if (!contactChat || contactChat.length === 0) {
+        return;
+    }
+
     return (
         <div className="chatbox-messages">
-            
-            {contactChat && contactChat.length > 0 ? (
-                contactChat
-                    .sort((a, b) => new Date(a.time) - new Date(b.time))
-                    .map((msg, index, messages) => {
-                        const isSent = msg.from === myUserId;
-                        const prevMessage = messages[index - 1];
-                        
-                        const isTimeDifferenceLarge = prevMessage ? getTimeDifferenceInMinutes(prevMessage.time, msg.time) >= 10 : true;
-                        const isSameSenderAsPrevious = prevMessage && prevMessage.from === msg.from;
+            {contactChat
+                .sort((a, b) => new Date(a.time) - new Date(b.time))
+                .map((msg, index, messages) => {
+                    const isSent = msg.from === myUserId;
+                    const prevMessage = messages[index - 1];
+                    
+                    const isTimeDifferenceLarge = prevMessage ? getTimeDifferenceInMinutes(prevMessage.time, msg.time) >= 10 : true;
+                    const isSameSenderAsPrevious = prevMessage && prevMessage.from === msg.from;
 
-                        return (
-                            <div key={msg.id} className={`chatbox-message-container ${isSent ? 'chatbox-message-container-sent' : 'chatbox-message-container-received'}`}>
-                                <div className="chatbox-header">
-                                    {(isTimeDifferenceLarge || !isSameSenderAsPrevious) && (
-                                        <span className="chatbox-username">
-                                            {isSent ? 'Vous - ' : friendList.find((u) => u.id === msg.from)?.username + " - "}
-                                        </span>
-                                    )}
-                                    {(isTimeDifferenceLarge || !isSameSenderAsPrevious) && (
-                                        <span className="chatbox-time">
-                                            {new Date(msg.time).toLocaleDateString()} {new Date(msg.time).toLocaleTimeString()}
-                                        </span>
-                                    )}
-                                </div>
-
-                                <div className={`chatbox-message ${isSent ? 'chatbox-message-sent' : 'chatbox-message-received'}`}>
-                                    <span>{msg.content}</span>
-                                </div>
-                            </div>
-                        );
-                    })
-            ) : (
-                <div className="chatbox-no-messages">
-                
-                </div>
-            )} 
+                    return <MessageCard key={msg.id} message={msg} isSent={isSent} isTimeDifferenceLarge={isTimeDifferenceLarge} isSameSenderAsPrevious={isSameSenderAsPrevious}/>;
+                })
+            }
 
             <div ref={messagesEndRef} />
         </div>
@@ -95,50 +68,3 @@ function ChatBox({ contact }) {
 }
 
 export default ChatBox;
-
-
-/* {contactChat?.messages && contactChat.messages.length > 0 ? (
-                contactChat.messages
-                    .sort((a, b) => new Date(a.time) - new Date(b.time))
-                    .map((msg, index, messages) => {
-                        const isSent = msg.senderId === myUserId;
-                        const prevMessage = messages[index - 1];
-                        
-                        const isTimeDifferenceLarge = prevMessage ? getTimeDifferenceInMinutes(prevMessage.time, msg.time) >= 10 : true;
-                        const isSameSenderAsPrevious = prevMessage && prevMessage.senderId === msg.senderId;
-
-                        return (
-                            <div key={msg.id} className={`chatbox-message-container ${isSent ? 'chatbox-message-container-sent' : 'chatbox-message-container-received'}`}>
-                                <div className="chatbox-header">
-                                    {(isTimeDifferenceLarge || !isSameSenderAsPrevious) && (
-                                        <span className="chatbox-username">
-                                            {isSent ? 'Vous - ' : userName + " - "}
-                                        </span>
-                                    )}
-                                    {(isTimeDifferenceLarge || !isSameSenderAsPrevious) && (
-                                        <span className="chatbox-time">
-                                            {new Date(msg.time).toLocaleDateString()} {new Date(msg.time).toLocaleTimeString()}
-                                        </span>
-                                    )}
-                                </div>
-
-                                <div className={`chatbox-message ${isSent ? 'chatbox-message-sent' : 'chatbox-message-received'}`}>
-                                    <span>{msg.content}</span>
-                                </div>
-                            </div>
-                        );
-                    })
-            ) : (
-                <div className="chatbox-no-messages">
-                   
-                </div>
-            )} */
-
-                /*        {contactChat.map((item, index) => (
-                <div key={index} className="message">
-                    <p><strong>From:</strong> {item.from}</p>
-                    <p><strong>To:</strong> {item.to}</p>
-                    <p><strong>Content:</strong> {item.content}</p>
-                    <p><strong>Type:</strong> {item.type}</p>
-                </div>
-            ))}*/

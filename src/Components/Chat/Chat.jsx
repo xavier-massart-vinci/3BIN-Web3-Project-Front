@@ -23,11 +23,9 @@ function Chat() {
             socket.emit("privateChatMessage", {...messageFormatted, to: currentContact.id});
     };
 
-    console.log(currentContact);
-
     return (
         <div className="chat-container">
-            <ChatBox contact={currentContact} />
+            <ChatBox currentContact={currentContact} />
             <MessageBar sendMessage={sendMessage} />
         </div>
     );
