@@ -1,8 +1,8 @@
 import "./Register.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register } from "../../../utlis/services";
-import errorMapping from "../../../utlis/mapError";
+import { register } from "../../../utils/services";
+import errorMapping from "../../../utils/mapError";
 
 function Register() {
   const [username, setUsername] = useState("");

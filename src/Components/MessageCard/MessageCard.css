@@ -1,13 +1,3 @@
-.chatbox-messages {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    height: 100%;
-    overflow-y: scroll; 
-    word-wrap: break-word;
-    white-space: pre-wrap;
-}
-
 .chatbox-message-container {
     display: flex;
     flex-direction: column;

@@ -1,18 +1,18 @@
 import { useOutletContext } from "react-router-dom";
 import './MessageCard.css';
 
-function MessageCard({ message, isSent, isTimeDifferenceLarge, isSameSenderAsPrevious }) {
+function MessageCard({ message, isSent, showSenderInfo }) {
     const { friendList } = useOutletContext();
 
     return (
         <div key={message.id} className={`chatbox-message-container ${isSent ? 'chatbox-message-container-sent' : 'chatbox-message-container-received'}`}>
             <div className="chatbox-header">
-                {(isTimeDifferenceLarge || !isSameSenderAsPrevious) && (
+                {showSenderInfo && (
                     <span className="chatbox-username">
                         {isSent ? 'Vous - ' : friendList.find((u) => u.id === message.from)?.username + " - "}
                     </span>
                 )}
-                {(isTimeDifferenceLarge || !isSameSenderAsPrevious) && (
+                {showSenderInfo && (
                     <span className="chatbox-time">
                         {new Date(message.time).toLocaleDateString()} {new Date(message.time).toLocaleTimeString()}
                     </span>

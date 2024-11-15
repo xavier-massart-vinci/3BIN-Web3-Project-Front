@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
+import { logout } from "../../utils/services";
 import './Navbar.css';
 
 const Navbar = () => {
@@ -11,8 +12,18 @@ const Navbar = () => {
     return (
         <div className="navbar">
             <div className="navbar-profile-section">
-                <img src="/public/profil.png" alt="Profile" className="navbar-profile-image navbar-no-select-image" />
-                <h4 className="navbar-profile-username">{username}</h4>
+                <div className="navbar-profile-info">
+                    <img src="/public/profil.png" alt="Profile" className="navbar-profile-image navbar-no-select-image" />
+                    <h4 className="navbar-profile-username">{username}</h4>
+                </div>
+                <div className="navbar-profile-actions">
+                    <button className="navbar-profile-action-btn" onClick={() => logout()}>
+                        <i className="fas fa-sign-out-alt"></i>
+                    </button>
+                    <button className="navbar-profile-action-btn" onClick={() => console.log()}>
+                        <i className="fas fa-user-plus"></i>
+                    </button>
+                </div>
             </div>
 
             <div className="navbar-menu-section navbar-no-select">

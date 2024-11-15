@@ -21,7 +21,14 @@ const login = async (payload) => {
   socket.connect();
 };
 
+const logout = () => {
+  localStorage.clear();
+  socket.disconnect();
+  window.location.reload();
+};
+
 export {
   register,
-  login
+  login,
+  logout
 }

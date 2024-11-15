@@ -30,7 +30,7 @@ function ChatBox({ currentContact }) {
             socket.off("chatHistory");
         };
 
-    }, [currentContact]);
+    }, [chatType, currentContact, isInGlobalChat]);
 
     const messagesEndRef = useRef(null);
 
@@ -38,10 +38,6 @@ function ChatBox({ currentContact }) {
         // Scroll automatique vers le bas quand un nouveau message est ajouté
         messagesEndRef.current?.scrollIntoView();
     }, [contactChat]);
-
-    const getTimeDifferenceInMinutes = (date1, date2) => {
-        return (new Date(date2) - new Date(date1)) / 1000 / 60;
-    };
 
     if (!contactChat || contactChat.length === 0) {
         return;
@@ -54,11 +50,10 @@ function ChatBox({ currentContact }) {
                 .map((msg, index, messages) => {
                     const isSent = msg.from === myUserId;
                     const prevMessage = messages[index - 1];
-                    
-                    const isTimeDifferenceLarge = prevMessage ? getTimeDifferenceInMinutes(prevMessage.time, msg.time) >= 10 : true;
-                    const isSameSenderAsPrevious = prevMessage && prevMessage.from === msg.from;
+                    const isTimeDifferenceLarge = prevMessage ? (new Date(prevMessage.time) - new Date(msg.time)) / 1000 / 60 >= 10 : true;
+                    const isSameSenderAsPrevious = prevMessage?.from === msg.from;
 
-                    return <MessageCard key={msg.id} message={msg} isSent={isSent} isTimeDifferenceLarge={isTimeDifferenceLarge} isSameSenderAsPrevious={isSameSenderAsPrevious}/>;
+                    return <MessageCard key={msg.id} message={msg} isSent={isSent} showSenderInfo={isTimeDifferenceLarge || !isSameSenderAsPrevious}/>;
                 })
             }
 

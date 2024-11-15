@@ -5,7 +5,7 @@ function MessageBar({ sendMessage }) {
     const [ message, setMessage ] = useState('');
 
     const handleMessage = (message) => {
-        if(message === '') return;
+        if(message.trim() === '') return;
         const messageFormatted = {content: message, type: "text"};
         sendMessage(messageFormatted)
         setMessage('');
