@@ -5,11 +5,11 @@ export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
 
   return {
-    base: isProduction ? '/web3-2024-project-group-16/' : '/',
+    base: '/',
     plugins: [react()],
     define: {
       'import.meta.env.VITE_API_BASE_URL': JSON.stringify(
-        isProduction ? 'https://echoes.azurewebsites.net' : 'http://localhost:3000'
+        isProduction ? 'http://BACK_END_IP:4000' : 'http://localhost:3000'
       ),
     },
   };
