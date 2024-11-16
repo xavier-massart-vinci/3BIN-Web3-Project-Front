@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import React, { useEffect } from 'react';
 import { socket } from "../../../socket";
- 
+
 function App() {
   const [isConnected, setIsConnected] = React.useState(false);
 
@@ -11,7 +11,7 @@ function App() {
     if (socket.disconnected && localStorage.getItem("token") != null) {
       socket.connect();
     }
-
+    
     // Attach the event listener
     socket.on("connect", () => setIsConnected(true));
     socket.on("disconnect", () => setIsConnected(false));
@@ -22,7 +22,6 @@ function App() {
       socket.off("disconnect");
     };
   });
-
 
   const context = {
     isConnected
