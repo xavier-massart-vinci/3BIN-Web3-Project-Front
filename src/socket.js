@@ -1,9 +1,6 @@
-import { io } from 'socket.io-client';
+import { io } from 'socket.io-client'; 
 
-// "undefined" means the URL will be computed from the `window.location` object
-const URL =  'http://localhost:3000';
-
-export const socket = io( URL, {
+export const socket = io( import.meta.env.VITE_API_BASE_URL, {
   autoConnect: false,
   auth: {
     token: localStorage.getItem('token')
