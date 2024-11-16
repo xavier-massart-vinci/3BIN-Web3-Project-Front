@@ -5,7 +5,7 @@ FROM node:18-alpine AS build
 WORKDIR /app
 
 # Cloner le dépôt GitHub du frontend
-RUN git clone -b chore/build https://github.com/xavier-massart-vinci/3BIN-Web3-Project-Front.git .
+RUN git clone https://github.com/xavier-massart-vinci/3BIN-Web3-Project-Front.git .
 
 # Se déplacer dans le dossier du frontend
 WORKDIR /app
@@ -24,6 +24,9 @@ FROM nginx:alpine
 
 # Copier les fichiers de l'application construite dans le dossier de Nginx
 COPY --from=build /app/dist /usr/share/nginx/html
+
+# Ajouter la configuration personnalisée de Nginx
+COPY default.conf /etc/nginx/conf.d/default.conf
 
 # Exposer le port 80 pour Nginx
 EXPOSE 80
