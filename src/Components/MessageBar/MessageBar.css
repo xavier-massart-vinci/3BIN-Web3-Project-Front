@@ -37,3 +37,39 @@
     margin-left: 10px;
     color: #666;
 }
+
+.message-bar-container {
+    position: relative;
+    width: 100%; /* Assurez-vous que le conteneur parent prend toute la largeur */
+    max-width: 600px; /* Assurez-vous que le conteneur parent a la même largeur maximale que la barre de message */
+    margin-left: auto; 
+    margin-right: auto; 
+}
+
+.commands-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 10px;
+    background-color: #f8f8f8;
+    width: 100%;
+    max-width: 200px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    position: absolute;
+    bottom: 100%;
+    left: 0; /* Aligner avec la gauche de la zone d'écriture */
+    z-index: 50;
+}
+
+.command-item {
+    padding: 5px;
+    cursor: pointer;
+    width: 100%; /* Prendre toute la largeur de la liste */
+}
+
+.command-item:hover {
+    background-color: #f0f0f0;
+}

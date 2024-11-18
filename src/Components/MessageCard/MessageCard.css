@@ -43,3 +43,16 @@
     color: #888;
     margin-top: 2px;
 }
+
+.message-gif,
+.message-image {
+    max-width: 100%; /* Limite la largeur max */
+    max-height: 400px; /* Limite la hauteur max */
+    object-fit: cover; /* Maintient le ratio */
+}
+
+.message-quote { /* Citation */
+    font-style: italic;
+    font-size:larger;
+    margin: 10px 0;
+}
