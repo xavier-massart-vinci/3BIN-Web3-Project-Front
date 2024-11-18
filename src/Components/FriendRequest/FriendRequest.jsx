@@ -152,7 +152,7 @@ const FriendRequest = () => {
                 ) : (
                     sentRequests.map((request, index) => (
                         <li key={index} className="request-item">
-                            <span>Invitaion envoyé à {request.receiver}</span>
+                            <span>Invitation envoyé à {request.receiver}</span>
                             <span>Status: {request.status}</span>
                         </li>
                     ))
