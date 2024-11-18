@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useOutletContext } from "react-router-dom";
-import FriendList from '../../Friend/FriendList';
-import fetchFriends from '../../Friend/fetchFriends';
-import FriendRequest from '../../Friend/FriendRequest';
+import FriendList from '../../FriendList/FriendList';
+import fetchFriends from '../../FriendList/fetchFriends';
+import FriendRequest from '../../FriendRequest/FriendRequest';
 
 const FriendsPage = () => {
     const {setFriendList} = useOutletContext();

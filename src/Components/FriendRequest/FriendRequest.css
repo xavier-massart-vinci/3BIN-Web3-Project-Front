@@ -1,0 +1,119 @@
+.friend-request-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.friend-request-container:hover {
+    transform: translateY(-5px);
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #4a4a4a;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 8px;
+}
+
+.search-bar {
+    width: 90%;
+    padding: 12px;
+    margin-bottom: 25px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: #f7f7f7;
+    transition: border-color 0.3s ease;
+}
+
+.search-bar:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.error-message {
+    color: #ff4d4d;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.suggestions-list,
+.requests-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.suggestion-item,
+.request-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.suggestion-item:hover,
+.request-item:hover {
+    background-color: #e8f4fd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-item span,
+.request-item span {
+    font-size: 1.1rem;
+    color: #4a4a4a;
+}
+
+.add-icon,
+.accept-icon,
+.reject-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.add-icon {
+    color: #28a745;
+}
+
+.accept-icon {
+    color: #28a745;
+    margin-right: 12px;
+}
+
+.reject-icon {
+    color: #dc3545;
+}
+
+.add-icon:hover,
+.accept-icon:hover,
+.reject-icon:hover {
+    transform: scale(1.2);
+}
+
+.requests-list p {
+    color: #6c757d;
+    font-style: italic;
+    text-align: center;
+}
+
+.no-results {
+    color: #6c757d;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.1rem;
+}

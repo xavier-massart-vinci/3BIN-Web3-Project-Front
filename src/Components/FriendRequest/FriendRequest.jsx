@@ -3,7 +3,7 @@ import { useOutletContext } from "react-router-dom";
 import { socket } from '../../socket';
 import axios from 'axios';
 import { FaUserPlus, FaUserCheck, FaUserTimes } from 'react-icons/fa';
-import fetchFriends from './fetchFriends';
+import fetchFriends from '../FriendList/fetchFriends';
 import './FriendRequest.css';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;

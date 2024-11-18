@@ -34,7 +34,7 @@ const FriendList = () => {
                     <table className="friend-list-table">
                         <thead>
                             <tr>
-                                <th>Friend List</th>
+                                <th>Liste d&apos;amis</th>
                                 <th></th>
                             </tr>
                         </thead>

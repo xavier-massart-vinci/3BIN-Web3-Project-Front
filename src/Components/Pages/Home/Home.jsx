@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { socket } from "../../../socket";
 import Loading from "../../Loading/Loading";
-import fetchFriends from "../../Friend/fetchFriends";
+import fetchFriends from "../../FriendList/fetchFriends";
 import "./Home.css";
 
 function Home() {
