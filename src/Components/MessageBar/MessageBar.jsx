@@ -45,7 +45,7 @@ function MessageBar({ sendMessage }) {
     };
 
     return (
-        <div>
+        <>
             {errorMessage && (
                 <div className="error-message">
                     {errorMessage}
@@ -62,8 +62,7 @@ function MessageBar({ sendMessage }) {
                 />
                 <button className="send-button" onClick={() => handleMessage(message)}>➤</button>
             </div>
-        </div>
-        
+        </>
     );
 }
 
