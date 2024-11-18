@@ -1,10 +1,9 @@
 import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { socket } from "../../../socket";
-import axios from "axios";
 import Loading from "../../Loading/Loading";
+import fetchFriends from "../../Friend/fetchFriends";
 import "./Home.css";
-import FriendsPage from "../Friends/FriendsPage";
 
 function Home() {
   const [friendList, setFriendList] = useState([]);
@@ -39,19 +38,13 @@ function Home() {
 
   // Fetch friend list from API
   useEffect(() => {
-    axios
-    .get(`${import.meta.env.VITE_API_BASE_URL}/users`)
-    .then((response) => {
-      setFriendList(response.data);
-    })
-    .catch((error) => {
-      console.error("Error fetching friend list", error);
-    });
+    fetchFriends(setFriendList);
   }, []);
 
   const context = {
     userConnectedList,
     friendList,
+    setFriendList,
   };
 
   return (

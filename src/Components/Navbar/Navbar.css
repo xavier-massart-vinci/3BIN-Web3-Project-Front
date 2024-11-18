@@ -193,3 +193,46 @@
 .navbar-no-select-image {
   pointer-events: none;
 }
+
+/* Style pour la fenêtre pop-up */
+/* Fenêtre pop-up qui glisse à partir du côté gauche */
+.side-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 25%; /* Adapte la largeur selon vos besoins */
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.9); /* Fond semi-transparent */
+  box-shadow: 2px 0 5px rgba(92, 92, 92, 0.1);
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  z-index: 1000;
+  transition: transform 0.3s ease-out;
+}
+
+/* Cache le reste de la page */
+.side-popup-closed {
+  transform: translateX(-100%);
+}
+
+/* Style pour le bouton retour */
+.back-btn {
+  background-color: transparent;
+  border: none;
+  color: #333;
+  font-size: 1.2em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.back-btn i {
+  margin-right: 8px;
+}
+
+.back-btn:hover {
+  color: #007bff;
+}
+

@@ -4,7 +4,6 @@
   padding: 20px;
   font-size: 1.5rem;
   color: #000; /* Black text for the title */
-  margin-bottom: 10px;
 }
 
 /* Table Box Styling */
@@ -31,8 +30,8 @@
 }
 
 .friend-list-table th {
-  background-color: #000; /* Black background for the header */
-  color: #fff; /* White text for the header */
+  background-color: #c1c1c1; /* Black background for the header */
+  color: #000000; /* White text for the header */
 }
 
 /* Row Hover Effect */

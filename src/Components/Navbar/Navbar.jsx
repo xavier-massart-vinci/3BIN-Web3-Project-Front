@@ -1,13 +1,19 @@
 import { useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import { logout } from "../../utils/services";
+import FriendsPage from "../Pages/Friends/FriendsPage";
 import './Navbar.css';
 
 const Navbar = () => {
     const [currentContact, setCurrentContact] = useState(0);
-    const { userConnectedList, friendList } = useOutletContext();
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const { userConnectedList, friendList} = useOutletContext();
     const username = JSON.parse(localStorage.getItem("user")).username;
     const userId = JSON.parse(localStorage.getItem("user")).id;
+
+    const togglePopup = () => {
+        setIsPopupOpen(!isPopupOpen);
+    };
 
     return (
         <div className="navbar">
@@ -20,7 +26,7 @@ const Navbar = () => {
                     <button className="navbar-profile-action-btn" onClick={() => logout()}>
                         <i className="fas fa-sign-out-alt"></i>
                     </button>
-                    <button className="navbar-profile-action-btn" onClick={() => console.log()}>
+                    <button className="navbar-profile-action-btn" onClick={togglePopup}>
                         <i className="fas fa-user-plus"></i>
                     </button>
                 </div>
@@ -61,6 +67,15 @@ const Navbar = () => {
                 ))}
 
             </div>
+            {isPopupOpen && (
+                <div className="side-popup">
+                    {/* Bouton retour en arrière */}
+                    <button className="back-btn" onClick={togglePopup}>
+                        <i className="fas fa-arrow-left"></i>
+                    </button>
+                    <FriendsPage/>
+                </div>
+            )}
 
         </div>
     );

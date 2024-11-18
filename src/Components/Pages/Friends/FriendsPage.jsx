@@ -1,20 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useOutletContext } from "react-router-dom";
 import FriendList from '../../Friend/FriendList';
-import AddFriend from '../../Friend/AddFriends';
 import fetchFriends from '../../Friend/fetchFriends';
+import FriendRequest from '../../Friend/FriendRequest';
 
 const FriendsPage = () => {
-    const [friends, setFriends] = useState([]);
+    const {setFriendList} = useOutletContext();
 
     useEffect(() => {
         // Fetch friends list when the page loads
-        fetchFriends(setFriends);
-    }, []);
+        fetchFriends(setFriendList);
+    }, [setFriendList]);
 
     return (
         <div>
-            <AddFriend setFriends={setFriends} />
-            <FriendList friends={friends} setFriends={setFriends} />
+            <FriendRequest />
+            <FriendList />
         </div>
     );
 };
