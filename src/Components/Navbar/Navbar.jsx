@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import { logout } from "../../utils/services";
 import './Navbar.css';
+import group from '../../assets/group.png';
+import profil from '../../assets/profil.png';
 
 const Navbar = () => {
     const [currentContact, setCurrentContact] = useState(0);
@@ -13,7 +15,7 @@ const Navbar = () => {
         <div className="navbar">
             <div className="navbar-profile-section">
                 <div className="navbar-profile-info">
-                    <img src="/assets/profil.png" alt="Profile" className="navbar-profile-image navbar-no-select-image" />
+                    <img src={profil} alt="Profile" className="navbar-profile-image navbar-no-select-image" />
                     <h4 className="navbar-profile-username">{username}</h4>
                 </div>
                 <div className="navbar-profile-actions">
@@ -37,7 +39,7 @@ const Navbar = () => {
                     to={`/chat`}
                     className={`navbar-contact-card ${currentContact === 0 ? 'navbar-active-contact' : ''}`}
                 >
-                    <img src="/assets/group.png" alt="Contact" className="navbar-contact-image navbar-no-select-image" />
+                    <img src={group} alt="Contact" className="navbar-contact-image navbar-no-select-image" />
                     <p>Global Chat</p>
                 </Link>
 
@@ -53,7 +55,7 @@ const Navbar = () => {
                         className={`navbar-contact-card ${currentContact === contact.id ? 'navbar-active-contact' : ''}`}
                     >
                         <div className="navbar-contact-image-container">
-                            <img src="/assets/profil.png" alt="Contact" className="navbar-contact-image navbar-no-select-image" />
+                            <img src={profil} alt="Contact" className="navbar-contact-image navbar-no-select-image" />
                             {userConnectedList.some(user => user.id === contact.id) && <div className="navbar-contact-image-status-online"></div>}
                         </div>
                         <p>{contact.username}</p>

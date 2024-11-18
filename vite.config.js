@@ -1,15 +1,17 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import react from "@vitejs/plugin-react";
+import dotenv from "dotenv";
+import { defineConfig } from "vite";
 
 export default defineConfig(({ mode }) => {
-  const isProduction = mode === 'production';
+  const isProduction = mode === "production";
+  const env = dotenv.config().parsed;
 
   return {
-    base: isProduction ? '/web3-2024-project-group-16/' : '/',
+    base: isProduction ? "/" : "/",
     plugins: [react()],
     define: {
-      'import.meta.env.VITE_API_BASE_URL': JSON.stringify(
-        isProduction ? 'https://echoes.azurewebsites.net' : 'http://localhost:3000'
+      "import.meta.env.VITE_API_BASE_URL": JSON.stringify(
+        env?.VITE_API_BASE_URL || "http://localhost:3000"
       ),
     },
   };
