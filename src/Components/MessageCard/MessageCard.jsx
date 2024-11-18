@@ -1,13 +1,19 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 import './MessageCard.css';
 
 function MessageCard({ message, isSent, showSenderInfo }) {
     const { friendList } = useOutletContext();
+    const [showError, setShowError] = useState(message.type === 'error');
 
     useEffect(() => {
         if (message.type === 'error') {
-            alert(message.content);
+            setShowError(true);
+            const timer = setTimeout(() => {
+                setShowError(false);
+            }, 5000); // Masquer le message d'erreur après 5 secondes
+
+            return () => clearTimeout(timer); // Nettoyer le timer
         }
     }, [message]);
 
@@ -30,31 +36,40 @@ function MessageCard({ message, isSent, showSenderInfo }) {
         }
     };
 
+    if (message.type === 'error' && showError) {
+        return (
+            <div className="error-message">
+                {message.content}
+            </div>
+        );
+    }
+
     if (message.type === 'error') {
-        return null; // Ne rien retourner si c'est une erreur
+        return null;
     }
 
     return (
-        <div key={message.id} className={`chatbox-message-container ${isSent ? 'chatbox-message-container-sent' : 'chatbox-message-container-received'}`}>
-            <div className="chatbox-header">
-                {showSenderInfo && (
-                    <span className="chatbox-username">
-                        {isSent ? 'Vous - ' : friendList.find((u) => u.id === message.from)?.username + " - "}
-                    </span>
-                )}
-                {showSenderInfo && (
-                    <span className="chatbox-time">
-                        {new Date(message.time).toLocaleDateString()} {new Date(message.time).toLocaleTimeString()}
-                    </span>
-                )}
-            </div>
+        <div className="message-card-container">
+            <div key={message.id} className={`chatbox-message-container ${isSent ? 'chatbox-message-container-sent' : 'chatbox-message-container-received'}`}>
+                <div className="chatbox-header">
+                    {showSenderInfo && (
+                        <span className="chatbox-username">
+                            {isSent ? 'Vous - ' : friendList.find((u) => u.id === message.from)?.username + " - "}
+                        </span>
+                    )}
+                    {showSenderInfo && (
+                        <span className="chatbox-time">
+                            {new Date(message.time).toLocaleDateString()} {new Date(message.time).toLocaleTimeString()}
+                        </span>
+                    )}
+                </div>
 
-            <div className={`chatbox-message ${isSent ? 'chatbox-message-sent' : 'chatbox-message-received'}`}>
-                {renderContent()}
+                <div className={`chatbox-message ${isSent ? 'chatbox-message-sent' : 'chatbox-message-received'}`}>
+                    {renderContent()}
+                </div>
             </div>
         </div>
     );
 }
 
 export default MessageCard;
-
