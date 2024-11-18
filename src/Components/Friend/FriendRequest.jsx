@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useOutletContext } from "react-router-dom";
+import { socket } from '../../socket';
 import axios from 'axios';
 import { FaUserPlus, FaUserCheck, FaUserTimes } from 'react-icons/fa';
 import fetchFriends from './fetchFriends';
@@ -20,6 +21,17 @@ const FriendRequest = () => {
         fetchSentRequests();
         fetchReceivedRequests();
         fetchFriends(setFriendList);
+
+        // Écouter le message socket pour la mise à jour des amis
+        socket.on('friendAdded', () => {
+            console.log('Friend added, refreshing friend list...');
+            fetchFriends(setFriendList);
+        });
+
+        return () => {
+            socket.off('friendAdded');
+        };
+        
     }, [setFriendList]);
 
     useEffect(() => {
