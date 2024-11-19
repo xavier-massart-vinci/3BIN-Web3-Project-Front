@@ -9,6 +9,7 @@ function MessageBar({ sendMessage }) {
   const [showCommands, setShowCommands] = useState(false);
   const [filteredCommands, setFilteredCommands] = useState([]);
   const commands = ["/gif", "/meme", "/citation", "/ascii"];
+  const [selectedCommandIndex, setSelectedCommandIndex] = useState(0);
   //emojis
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [indexButtonEmoji, setIndexButtonEmoji] = useState(0);
@@ -58,10 +59,16 @@ function MessageBar({ sendMessage }) {
       filteredCommands.length > 0
     ) {
       event.preventDefault();
-      setMessage(filteredCommands[0]);
+      setMessage(filteredCommands[selectedCommandIndex]);
       setShowCommands(false);
-    }
-  };
+    } else if (event.key === "ArrowDown" && showCommands && filteredCommands.length > 0) {
+        event.preventDefault();
+        setSelectedCommandIndex((prevIndex) => (prevIndex + 1) % filteredCommands.length);
+      } else if (event.key === "ArrowUp" && showCommands && filteredCommands.length > 0) {
+        event.preventDefault();
+        setSelectedCommandIndex((prevIndex) => (prevIndex - 1 + filteredCommands.length) % filteredCommands.length);
+      }
+    };
 
   const handleMouseEnter = () => {
     setIndexButtonEmoji(indexButtonEmoji + 1);
@@ -93,7 +100,7 @@ function MessageBar({ sendMessage }) {
           {filteredCommands.map((command, index) => (
             <div
               key={index}
-              className="command-item"
+              className={index === selectedCommandIndex ? "selected-command" : ""}
               onClick={() => handleCommandClick(command)}
             >
               {command}

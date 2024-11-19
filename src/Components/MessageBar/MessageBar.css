@@ -91,12 +91,14 @@
     z-index: 50;
 }
 
-.command-item {
-    padding: 5px;
-    cursor: pointer;
-    width: 100%; /* Prendre toute la largeur de la liste */
-}
-
 .command-item:hover {
     background-color: #f0f0f0;
 }
+
+.selected-command {
+    padding-left: 10px;
+    cursor: pointer;
+    width: 90%;
+    border-radius: 10px;
+    background-color: #e0e0e0; /* Couleur de fond grisée */
+  }
