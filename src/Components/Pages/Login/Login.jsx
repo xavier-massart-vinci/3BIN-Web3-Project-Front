@@ -3,6 +3,7 @@ import "./Login.css";
 import { useState } from "react";
 import { login } from "../../../utils/services";
 import errorMapping from "../../../utils/mapError";
+import  logo  from "../../../assets/logo.png"
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -35,54 +36,57 @@ function Login() {
 
   return (
     <>
-      <div className="login-header">
-        <h1 className="login-title">Echoes</h1>
-      </div>
-      <div className="login-container">
-        <div className="login-form-wrapper">
-          <form onSubmit={loginRequest} className="login-form">
-            <h2 className="form-title">Sign In</h2>
+      <div className="login-page">
+        <div className="login-header">
+          <img src={logo} alt="Logo" className="logo"/>
+          <h1 className="login-title">Echoes</h1>
+        </div>
+        <div className="login-container">
+          <div className="login-form-wrapper">
+            <form onSubmit={loginRequest} className="login-form">
+              <h2 className="form-title">Sign In</h2>
 
-            <div className="form-group">
-              <label htmlFor="pseudo" className="form-label">
-                Pseudo
-              </label>
-              <input
-                type="text"
-                name="pseudo"
-                id="pseudo"
-                className="form-input"
-                value={username}
-                onChange={handleUsernameChange}
-                required
-              />
-            </div>
+              <div className="form-group">
+                <label htmlFor="pseudo" className="form-label">
+                  Pseudo
+                </label>
+                <input
+                  type="text"
+                  name="pseudo"
+                  id="pseudo"
+                  className="form-input"
+                  value={username}
+                  onChange={handleUsernameChange}
+                  required
+                />
+              </div>
 
-            <div className="form-group">
-              <label htmlFor="password" className="form-label">
-                Password
-              </label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                className="form-input"
-                value={password}
-                onChange={handlePasswordChange}
-                required
-              />
-            </div>
+              <div className="form-group">
+                <label htmlFor="password" className="form-label">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  className="form-input"
+                  value={password}
+                  onChange={handlePasswordChange}
+                  required
+                />
+              </div>
 
-            <button type="submit" className="form-button">
-              Sign In
-            </button>
-            
-            <p className="error-message">{error}</p>
+              <button type="submit" className="form-button">
+                Sign In
+              </button>
+              
+              <p className="error-message">{error}</p>
 
-            <a onClick={handleRegisterClick} className="forgot-password-link">
-              Create account?
-            </a>
-          </form>
+              <a onClick={handleRegisterClick} className="register-link">
+                Create account?
+              </a>
+            </form>
+          </div>
         </div>
       </div>
     </>
