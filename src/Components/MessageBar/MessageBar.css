@@ -1,68 +1,68 @@
 .message-bar {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    padding: 10px;
-    background-color: #f8f8f8;
-    width: 100%;
-    max-width: 600px;
-    box-sizing: border-box;
-    margin-left: auto; 
-    margin-right: auto; 
-    margin-top: auto; 
-    position: relative; /* Important to position the picker */
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 10px;
+  background-color: #f8f8f8;
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  position: relative; /* Important to position the picker */
 }
 
 .message-input {
-    width: 100%;
-    border: none;
-    outline: none;
-    resize: none;
-    background: none;
-    font-size: 16px;
-    line-height: 1.5;
-    font-family: sans-serif;
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  background: none;
+  font-size: 16px;
+  line-height: 1.5;
+  font-family: sans-serif;
 }
 
 .message-input::placeholder {
-    color: #999;
+  color: #999;
 }
 
 .message-bar-send-button {
-    background: none;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-size: 20px;
-    margin-left: 10px;
-    color: #666;
-    transition: transform 0.2s ease;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 20px;
+  margin-left: 10px;
+  color: #666;
+  transition: transform 0.2s ease;
 }
 
 .message-bar-emoji-button {
-    background: none;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-size: 20px;
-    margin-right: 0px;
-    color: #666;
-    transition: transform 0.2s ease;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 20px;
+  margin-right: 0px;
+  color: #666;
+  transition: transform 0.2s ease;
 }
 
 .message-bar-emoji-picker {
-    position: absolute;
-    bottom: 60px; 
-    right: 0px;
-    z-index: 1000;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    overflow: hidden;
+  position: absolute;
+  bottom: 60px;
+  right: 0px;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .message-bar-button-large {
-    transform: scale(1.2);
+  transform: scale(1.2);
 }
 
 .message-bar-container {

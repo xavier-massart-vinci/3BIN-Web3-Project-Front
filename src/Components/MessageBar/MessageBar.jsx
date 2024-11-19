@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import "./MessageBar.css";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
+import { useEffect, useState } from "react";
+import "./MessageBar.css";
 
 function MessageBar({ sendMessage }) {
   const [message, setMessage] = useState("");
@@ -61,14 +61,27 @@ function MessageBar({ sendMessage }) {
       event.preventDefault();
       setMessage(filteredCommands[selectedCommandIndex]);
       setShowCommands(false);
-    } else if (event.key === "ArrowDown" && showCommands && filteredCommands.length > 0) {
-        event.preventDefault();
-        setSelectedCommandIndex((prevIndex) => (prevIndex + 1) % filteredCommands.length);
-      } else if (event.key === "ArrowUp" && showCommands && filteredCommands.length > 0) {
-        event.preventDefault();
-        setSelectedCommandIndex((prevIndex) => (prevIndex - 1 + filteredCommands.length) % filteredCommands.length);
-      }
-    };
+    } else if (
+      event.key === "ArrowDown" &&
+      showCommands &&
+      filteredCommands.length > 0
+    ) {
+      event.preventDefault();
+      setSelectedCommandIndex(
+        (prevIndex) => (prevIndex + 1) % filteredCommands.length
+      );
+    } else if (
+      event.key === "ArrowUp" &&
+      showCommands &&
+      filteredCommands.length > 0
+    ) {
+      event.preventDefault();
+      setSelectedCommandIndex(
+        (prevIndex) =>
+          (prevIndex - 1 + filteredCommands.length) % filteredCommands.length
+      );
+    }
+  };
 
   const handleMouseEnter = () => {
     setIndexButtonEmoji(indexButtonEmoji + 1);
@@ -100,7 +113,9 @@ function MessageBar({ sendMessage }) {
           {filteredCommands.map((command, index) => (
             <div
               key={index}
-              className={index === selectedCommandIndex ? "selected-command" : ""}
+              className={
+                index === selectedCommandIndex ? "selected-command" : ""
+              }
               onClick={() => handleCommandClick(command)}
             >
               {command}
