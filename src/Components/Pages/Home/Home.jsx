@@ -1,5 +1,6 @@
-import { Outlet } from "react-router-dom";
+import axios from "axios";
 import { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 import { socket } from "../../../socket";
 import Loading from "../../Loading/Loading";
 import fetchFriends from "../../FriendList/fetchFriends";
@@ -29,7 +30,7 @@ function Home() {
     socket.on("userDiscovery", handleUserDiscovery);
     socket.on("userDisconnect", handleUserDisconnect);
 
-    return () => { 
+    return () => {
       socket.off("userDiscoveryInit", handleUserDiscoveryInit);
       socket.off("userDiscovery", handleUserDiscovery);
       socket.off("userDisconnect", handleUserDisconnect);
@@ -47,16 +48,7 @@ function Home() {
     setFriendList,
   };
 
-  return (
-    <>
-    {
-      loading ? 
-      <Loading /> : 
-      <Outlet context={context}/>
-    }
-    </>
-   
-  );
+  return <>{loading ? <Loading /> : <Outlet context={context} />}</>;
 }
 
 export default Home;

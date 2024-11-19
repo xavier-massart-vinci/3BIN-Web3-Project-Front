@@ -1,39 +1,104 @@
 .message-bar {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 10px;
+  background-color: #f8f8f8;
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  position: relative; /* Important to position the picker */
+}
+
+.message-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  background: none;
+  font-size: 16px;
+  line-height: 1.5;
+  font-family: sans-serif;
+}
+
+.message-input::placeholder {
+  color: #999;
+}
+
+.message-bar-send-button {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 20px;
+  margin-left: 10px;
+  color: #666;
+  transition: transform 0.2s ease;
+}
+
+.message-bar-emoji-button {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 20px;
+  margin-right: 0px;
+  color: #666;
+  transition: transform 0.2s ease;
+}
+
+.message-bar-emoji-picker {
+  position: absolute;
+  bottom: 60px;
+  right: 0px;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.message-bar-button-large {
+  transform: scale(1.2);
+}
+
+.message-bar-container {
+    position: relative;
+    width: 100%; /* Assurez-vous que le conteneur parent prend toute la largeur */
+    max-width: 600px; /* Assurez-vous que le conteneur parent a la même largeur maximale que la barre de message */
+    margin-left: auto; 
+    margin-right: auto; 
+}
+
+.commands-list {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     border: 1px solid #ccc;
     border-radius: 20px;
     padding: 10px;
     background-color: #f8f8f8;
     width: 100%;
-    max-width: 600px;
+    max-width: 200px;
     box-sizing: border-box;
-    margin-left: auto; 
-    margin-right: auto; 
-    margin-top: auto; 
+    margin-bottom: 5px;
+    position: absolute;
+    bottom: 100%;
+    left: 0; /* Aligner avec la gauche de la zone d'écriture */
+    z-index: 50;
 }
 
-.message-input {
-    width: 100%;
-    border: none;
-    outline: none;
-    resize: none;
-    background: none;
-    font-size: 16px;
-    line-height: 1.5;
-    font-family: sans-serif;
+.command-item:hover {
+    background-color: #f0f0f0;
 }
 
-.message-input::placeholder {
-    color: #999;
-}
-
-.send-button {
-    background: none;
-    border: none;
-    outline: none;
+.selected-command {
+    padding-left: 10px;
     cursor: pointer;
-    font-size: 20px;
-    margin-left: 10px;
-    color: #666;
-}
+    width: 90%;
+    border-radius: 10px;
+    background-color: #e0e0e0; /* Couleur de fond grisée */
+  }

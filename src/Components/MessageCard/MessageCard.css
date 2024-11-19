@@ -1,45 +1,74 @@
 .chatbox-message-container {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
 }
 
 .chatbox-message-container-sent {
-    align-items: flex-end;
+  align-items: flex-end;
 }
 
 .chatbox-message-container-received {
-    align-items: flex-start;
+  align-items: flex-start;
 }
 
 .chatbox-username {
-    font-size: 0.85em;
-    color: #888;
-    margin-bottom: 2px;
+  font-size: 0.85em;
+  color: #888;
+  margin-bottom: 2px;
 }
 
 .chatbox-message {
-    padding: 10px 15px;
-    border-radius: 15px;
-    max-width: 60%;
-    color: white;
-    font-size: 1em;
-    display: inline-block;
-    word-wrap: break-word;
+  padding: 10px 15px;
+  border-radius: 15px;
+  max-width: 60%;
+  color: white;
+  font-size: 1em;
+  display: inline-block;
+  word-wrap: break-word;
 }
 
 .chatbox-message-sent {
-    background-color: #0078fe;
-    color: white;
+  background-color: #0078fe;
+  color: white;
 }
 
 .chatbox-message-received {
-    background-color: #e5e5ea;
-    color: black;
+  background-color: #e5e5ea;
+  color: black;
 }
 
 .chatbox-time {
-    font-size: 0.75em;
-    color: #888;
-    margin-top: 2px;
+  font-size: 0.75em;
+  color: #888;
+  margin-top: 2px;
+}
+
+.message-gif,
+.message-image {
+    max-width: 100%; /* Limite la largeur max */
+    max-height: 400px; /* Limite la hauteur max */
+    object-fit: cover; /* Maintient le ratio */
+}
+
+.message-quote { /* Citation */
+    font-style: italic;
+    font-size:larger;
+    margin: 10px 0;
+}
+
+.error-message {
+    display: inline;
+    text-align: center;
+    align-content: center;
+    border: 1px solid red;
+    border-radius: 20px;
+    padding: 6px;
+    background-color: #ffe6e6;
+    color: red;
+    box-sizing: border-box;
+    max-width: 200px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
 }
