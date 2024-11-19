@@ -41,10 +41,10 @@
   width: 100%;
 }
 
-.error-message {
-  color: red;
-  font-weight: bold;
-  margin-top: 10px;
+.error-message-register {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
 }
 
 .signIn-link {
