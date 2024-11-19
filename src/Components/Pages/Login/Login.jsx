@@ -43,7 +43,7 @@ function Login() {
         <div className="login-container">
           <div className="login-form-wrapper">
             <form onSubmit={loginRequest} className="login-form">
-              <h2 className="form-title">Sign In</h2>
+              <h2 className="form-title">S'identifier</h2>
 
               <div className="form-group">
                 <label htmlFor="pseudo" className="form-label">
@@ -62,7 +62,7 @@ function Login() {
 
               <div className="form-group">
                 <label htmlFor="password" className="form-label">
-                  Password
+                  Mot de passe
                 </label>
                 <input
                   type="password"
@@ -76,13 +76,13 @@ function Login() {
               </div>
 
               <button type="submit" className="form-button">
-                Sign In
+                Connexion
               </button>
               
               <p className="error-message-login">{error}</p>
 
               <a onClick={handleRegisterClick} className="register-link">
-                Create account?
+                Créer un compte?
               </a>
             </form>
           </div>

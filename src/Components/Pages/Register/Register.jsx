@@ -54,11 +54,11 @@ function Register() {
         <div className="register-container">
           <div className="register-form-wrapper">
             <form onSubmit={handleForm} className="register-form">
-              <h2 className="form-title">Register</h2>
+              <h2 className="form-title">S'inscrire</h2>
 
               <div className="form-group">
                 <label htmlFor="Username" className="form-label">
-                  Username
+                  Pseudo
                 </label>
                 <input
                   type="text"
@@ -73,7 +73,7 @@ function Register() {
 
               <div className="form-group">
                 <label htmlFor="password" className="form-label">
-                  Password
+                  Le mot de passe
                 </label>
                 <input
                   type="password"
@@ -88,7 +88,7 @@ function Register() {
 
               <div className="form-group">
                 <label htmlFor="password" className="form-label">
-                  Confirm Password
+                  Confirmer le mot de passe
                 </label>
                 <input
                   type="password"
@@ -102,13 +102,13 @@ function Register() {
               </div>
 
               <button type="submit" className="form-button">
-                Register
+                S'inscrire
               </button>
 
               <p className="error-message-register">{error}</p>
 
               <a onClick={handleSignInClick} className="signIn-link">
-                Sign In?
+                Se connecter?
               </a>
             </form>
           </div>
