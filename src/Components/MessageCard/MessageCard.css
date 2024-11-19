@@ -43,3 +43,32 @@
     color: #888;
     margin-top: 2px;
 }
+
+.message-gif,
+.message-image {
+    max-width: 100%; /* Limite la largeur max */
+    max-height: 400px; /* Limite la hauteur max */
+    object-fit: cover; /* Maintient le ratio */
+}
+
+.message-quote { /* Citation */
+    font-style: italic;
+    font-size:larger;
+    margin: 10px 0;
+}
+
+.error-message {
+    display: inline;
+    text-align: center;
+    align-content: center;
+    border: 1px solid red;
+    border-radius: 20px;
+    padding: 6px;
+    background-color: #ffe6e6;
+    color: red;
+    box-sizing: border-box;
+    max-width: 200px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
