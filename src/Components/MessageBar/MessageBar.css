@@ -1,5 +1,4 @@
 .message-bar {
-
   display: flex;
   align-items: center;
   border: 1px solid #ccc;
@@ -12,6 +11,7 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: auto;
+  position: relative; /* Important to position the picker */
 }
 
 .message-input {
@@ -29,7 +29,7 @@
   color: #999;
 }
 
-.send-button {
+.message-bar-send-button {
   background: none;
   border: none;
   outline: none;
@@ -37,40 +37,30 @@
   font-size: 20px;
   margin-left: 10px;
   color: #666;
-
-.message-bar-send-button {
-    background: none;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-size: 20px;
-    margin-left: 10px;
-    color: #666;
-    transition: transform 0.2s ease;
+  transition: transform 0.2s ease;
 }
 
 .message-bar-emoji-button {
-    background: none;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-size: 20px;
-    margin-right: 0px;
-    color: #666;
-    transition: transform 0.2s ease;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 20px;
+  margin-right: 0px;
+  color: #666;
+  transition: transform 0.2s ease;
 }
 
 .message-bar-emoji-picker {
-    position: absolute;
-    bottom: 60px; 
-    right: 0px;
-    z-index: 1000;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    overflow: hidden;
+  position: absolute;
+  bottom: 60px;
+  right: 0px;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .message-bar-button-large {
-    transform: scale(1.2);
-
+  transform: scale(1.2);
 }
