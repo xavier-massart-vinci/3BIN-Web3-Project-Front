@@ -80,7 +80,7 @@ function Login() {
                 Sign In
               </button>
               
-              <p className="error-message">{error}</p>
+              <p className="error-message-login">{error}</p>
 
               <a onClick={handleRegisterClick} className="register-link">
                 Create account?

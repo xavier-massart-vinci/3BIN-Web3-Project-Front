@@ -106,7 +106,7 @@ function Register() {
                 Register
               </button>
 
-              <p className="error-message">{error}</p>
+              <p className="error-message-register">{error}</p>
 
               <a onClick={handleSignInClick} className="signIn-link">
                 Sign In?

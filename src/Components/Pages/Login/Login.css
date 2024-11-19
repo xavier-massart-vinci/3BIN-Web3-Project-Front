@@ -106,3 +106,9 @@
     height: min-content;
     margin-bottom: 10px;
 }
+
+.error-message-login {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}
