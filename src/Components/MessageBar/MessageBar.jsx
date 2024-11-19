@@ -8,7 +8,7 @@ function MessageBar({ sendMessage }) {
   //commands
   const [showCommands, setShowCommands] = useState(false);
   const [filteredCommands, setFilteredCommands] = useState([]);
-  const commands = ["/gif", "/meme", "/citation", "/ascii"];
+  const commands = ["/gif", "/meme", "/citation"];
   const [selectedCommandIndex, setSelectedCommandIndex] = useState(0);
   //emojis
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
