@@ -23,13 +23,18 @@ const FriendRequest = () => {
         fetchFriends(setFriendList);
 
         // Écouter le message socket pour la mise à jour des amis
-        socket.on('friendAdded', () => {
-            console.log('Friend added, refreshing friend list...');
-            fetchFriends(setFriendList);
+        ['friendAdded', 'friendRequestRejected'].forEach(event => {
+            socket.on(event, () => {
+                console.log(`${event === 'friendAdded' ? 'Friend added' : 'Friend request rejected'}, refreshing friend list...`);
+                fetchFriends(setFriendList);
+                fetchSentRequests();
+                fetchReceivedRequests();
+            });
         });
 
         return () => {
             socket.off('friendAdded');
+            socket.off('friendRequestRejected');
         };
         
     }, [setFriendList]);
