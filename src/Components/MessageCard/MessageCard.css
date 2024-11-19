@@ -1,45 +1,45 @@
 .chatbox-message-container {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
 }
 
 .chatbox-message-container-sent {
-    align-items: flex-end;
+  align-items: flex-end;
 }
 
 .chatbox-message-container-received {
-    align-items: flex-start;
+  align-items: flex-start;
 }
 
 .chatbox-username {
-    font-size: 0.85em;
-    color: #888;
-    margin-bottom: 2px;
+  font-size: 0.85em;
+  color: #888;
+  margin-bottom: 2px;
 }
 
 .chatbox-message {
-    padding: 10px 15px;
-    border-radius: 15px;
-    max-width: 60%;
-    color: white;
-    font-size: 1em;
-    display: inline-block;
-    word-wrap: break-word;
+  padding: 10px 15px;
+  border-radius: 15px;
+  max-width: 60%;
+  color: white;
+  font-size: 1em;
+  display: inline-block;
+  word-wrap: break-word;
 }
 
 .chatbox-message-sent {
-    background-color: #0078fe;
-    color: white;
+  background-color: #0078fe;
+  color: white;
 }
 
 .chatbox-message-received {
-    background-color: #e5e5ea;
-    color: black;
+  background-color: #e5e5ea;
+  color: black;
 }
 
 .chatbox-time {
-    font-size: 0.75em;
-    color: #888;
-    margin-top: 2px;
+  font-size: 0.75em;
+  color: #888;
+  margin-top: 2px;
 }

@@ -1,8 +1,8 @@
-import { useNavigate } from "react-router-dom";
-import "./Login.css";
 import { useState } from "react";
-import { login } from "../../../utils/services";
+import { useNavigate } from "react-router-dom";
 import errorMapping from "../../../utils/mapError";
+import { login } from "../../../utils/services";
+import "./Login.css";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -22,12 +22,11 @@ function Login() {
     e.preventDefault();
 
     try {
-      await login(
-        {
-        username : username,
-        password : password
+      await login({
+        username: username,
+        password: password,
       });
-      navigate('/');
+      navigate("/");
     } catch (e) {
       setError(errorMapping(e.status));
     }
@@ -76,7 +75,7 @@ function Login() {
             <button type="submit" className="form-button">
               Sign In
             </button>
-            
+
             <p className="error-message">{error}</p>
 
             <a onClick={handleRegisterClick} className="forgot-password-link">

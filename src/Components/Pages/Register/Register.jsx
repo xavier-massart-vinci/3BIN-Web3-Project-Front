@@ -1,8 +1,8 @@
-import "./Register.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register } from "../../../utils/services";
 import errorMapping from "../../../utils/mapError";
+import { register } from "../../../utils/services";
+import "./Register.css";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -28,20 +28,19 @@ function Register() {
       setError("");
       try {
         await registerRequest();
-        navigate("/")
+        navigate("/");
       } catch (e) {
-        setError(errorMapping(e.status))
+        setError(errorMapping(e.status));
       }
     }
   };
-
 
   const registerRequest = async () => {
     await register({
       username: username,
       password: password,
     });
-   return navigate("/");
+    return navigate("/");
   };
 
   return (
@@ -56,7 +55,7 @@ function Register() {
 
             <div className="form-group">
               <label htmlFor="Username" className="form-label">
-              Username
+                Username
               </label>
               <input
                 type="text"
