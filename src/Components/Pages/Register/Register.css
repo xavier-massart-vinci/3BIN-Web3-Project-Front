@@ -1,6 +1,15 @@
+.register-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 85vh;
+}
+
 .register-header {
-  margin-bottom: 20px;
+  margin-bottom: 50px;
   text-align: center;
+  display: flex;
 }
 
 .register-title {
@@ -32,15 +41,27 @@
   width: 100%;
 }
 
-.signIn-link {
-  margin-top: 10px;
-  color: black;
-  text-decoration: none;
-  font-weight: 500;
-}
-
 .error-message {
   color: red;
   font-weight: bold;
   margin-top: 10px;
+}
+
+.signIn-link {
+  color: #25deb3;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.signIn-link:hover {
+  color: #0df5aa;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.logo {
+  width: 75px;
+  height: min-content;
+  margin-bottom: 10px;
 }
