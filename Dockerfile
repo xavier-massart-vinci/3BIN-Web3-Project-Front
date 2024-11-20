@@ -5,13 +5,16 @@ FROM node:18-alpine AS build
 WORKDIR /app
 
 # Cloner le dépôt GitHub du frontend
-RUN git clone https://github.com/xavier-massart-vinci/3BIN-Web3-Project-Front.git .
+#RUN git clone https://github.com/xavier-massart-vinci/3BIN-Web3-Project-Front.git .
 
-# Se déplacer dans le dossier du frontend
-WORKDIR /app
+# Copier le package.json et package-lock.json pour installer les dépendances
+COPY package.json package-lock.json ./
 
 # Installer les dépendances du frontend
 RUN npm install
+
+# Copier le reste des fichiers du backend
+COPY . .
 
 # Construire l'application React en mode production
 RUN npm run build

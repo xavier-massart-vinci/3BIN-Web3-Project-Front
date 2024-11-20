@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
-import "./MessageBar.css";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
+import {useEffect, useState } from "react";
+import { socket } from '../../socket';
+import "./MessageBar.css";
 
 function MessageBar({ sendMessage }) {
   const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   //commands
   const [showCommands, setShowCommands] = useState(false);
   const [filteredCommands, setFilteredCommands] = useState([]);
@@ -35,14 +37,26 @@ function MessageBar({ sendMessage }) {
     window.addEventListener("keydown", handleEscapeKey);
     window.addEventListener("mousedown", handleOutsideClick);
 
+    const handleMessageError = (error) => {
+      if (error && error.error) {
+          setErrorMessage(error.error);
+      }
+    };
+
+    socket.on('messageError', handleMessageError);
+
     return () => {
       window.removeEventListener("mousedown", handleOutsideClick);
       window.removeEventListener("keydown", handleEscapeKey);
+      socket.off('messageError', handleMessageError);
     };
   }, []);
 
+
+
   const handleMessage = () => {
     if (message.trim() === "") return;
+    setErrorMessage('');
     const messageFormatted = { content: message, type: "text" };
     sendMessage(messageFormatted);
     setMessage("");
@@ -61,14 +75,27 @@ function MessageBar({ sendMessage }) {
       event.preventDefault();
       setMessage(filteredCommands[selectedCommandIndex]);
       setShowCommands(false);
-    } else if (event.key === "ArrowDown" && showCommands && filteredCommands.length > 0) {
-        event.preventDefault();
-        setSelectedCommandIndex((prevIndex) => (prevIndex + 1) % filteredCommands.length);
-      } else if (event.key === "ArrowUp" && showCommands && filteredCommands.length > 0) {
-        event.preventDefault();
-        setSelectedCommandIndex((prevIndex) => (prevIndex - 1 + filteredCommands.length) % filteredCommands.length);
-      }
-    };
+    } else if (
+      event.key === "ArrowDown" &&
+      showCommands &&
+      filteredCommands.length > 0
+    ) {
+      event.preventDefault();
+      setSelectedCommandIndex(
+        (prevIndex) => (prevIndex + 1) % filteredCommands.length
+      );
+    } else if (
+      event.key === "ArrowUp" &&
+      showCommands &&
+      filteredCommands.length > 0
+    ) {
+      event.preventDefault();
+      setSelectedCommandIndex(
+        (prevIndex) =>
+          (prevIndex - 1 + filteredCommands.length) % filteredCommands.length
+      );
+    }
+  };
 
   const handleMouseEnter = () => {
     setIndexButtonEmoji(indexButtonEmoji + 1);
@@ -93,6 +120,7 @@ function MessageBar({ sendMessage }) {
     setShowCommands(false);
   };
 
+
   return (
     <div className="message-bar-container">
       {showCommands && (
@@ -100,7 +128,9 @@ function MessageBar({ sendMessage }) {
           {filteredCommands.map((command, index) => (
             <div
               key={index}
-              className={index === selectedCommandIndex ? "selected-command" : ""}
+              className={
+                index === selectedCommandIndex ? "selected-command" : ""
+              }
               onClick={() => handleCommandClick(command)}
             >
               {command}

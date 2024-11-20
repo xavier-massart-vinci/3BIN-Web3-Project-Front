@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider, createBrowserRouter  } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import App from './Components/Pages/App/App'
-import Home from './Components/Pages/Home/Home'
-import Login from './Components/Pages/Login/Login'
-import Register from './Components/Pages/Register/Register'
-import PrivateRoute from './Components/PrivateRoute/PrivateRoute'
-import Chat from './Components/Chat/Chat'
+import Chat from "./Components/Chat/Chat";
 import Navbar from "./Components/Navbar/Navbar";
+import App from "./Components/Pages/App/App";
+import Home from "./Components/Pages/Home/Home";
+import Login from "./Components/Pages/Login/Login";
+import Register from "./Components/Pages/Register/Register";
+import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -17,11 +17,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <PrivateRoute/>,
+        element: <PrivateRoute />,
       },
       {
         path: "*",
-        element: <PrivateRoute/>,
+        element: <PrivateRoute />,
       },
       {
         path: "login",
@@ -32,16 +32,22 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        element: <PrivateRoute><Home/></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        ),
         children: [
           {
             path: "chat/:userId?",
-            element: <>
-              <Navbar />
-              <Chat />
-            </>,
+            element: (
+              <>
+                <Navbar />
+                <Chat />
+              </>
+            ),
           },
-        ]
+        ],
       },
     ],
   },
@@ -49,6 +55,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router}/>  
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
