@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import group from "../../assets/group.png";
 import profil from "../../assets/profil.png";
 import { logout } from "../../utils/services";
@@ -92,14 +93,22 @@ const Navbar = () => {
             </Link>
           ))}
       </div>
-            {isPopupOpen && (
-                <div className="navbar-no-side-popup">
-                    <button className="navbar-add-friend-back-btn" onClick={togglePopup}>
-                        <i className="fas fa-arrow-left"></i>
-                    </button>
-                    <FriendsPage/>
-                </div>
-            )}
+      <AnimatePresence>
+        {isPopupOpen && (
+          <motion.div
+            className="navbar-no-side-popup"
+            initial={{ x: "-100%" }} // Start position (invisible)
+            animate={{ x: 0 }} // Target position
+            exit={{ x: "-100%" }} // Back to start position
+            transition={{ duration: 0.2, ease: "easeInOut" }} // Animation duration and easing
+          >
+            <button className="navbar-add-friend-back-btn" onClick={togglePopup}>
+              <i className="fas fa-arrow-left"></i>
+            </button>
+            <FriendsPage />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

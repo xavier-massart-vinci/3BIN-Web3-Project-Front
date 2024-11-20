@@ -1,16 +1,11 @@
 .friend-request-container {
     max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
+    margin: 0px auto;
+    padding: 0px 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.9); 
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
-}
-
-.friend-request-container:hover {
-    transform: translateY(-5px);
 }
 
 .friend-request-h2 {
@@ -38,7 +33,7 @@
     outline: none;
 }
 
-.error-message {
+.friend-request-error-message-friend {
     color: #ff4d4d;
     margin-bottom: 20px;
     font-size: 1rem;
@@ -46,15 +41,16 @@
     text-align: center;
 }
 
-.suggestions-list,
-.requests-list {
+.friend-request-suggestions-list,
+.friend-request-requests-list {
     list-style-type: none;
     padding: 0;
     margin: 0;
+    overflow: hidden;
 }
 
-.suggestion-item,
-.request-item {
+.friend-request-suggestion-item,
+.friend-request-request-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -67,54 +63,47 @@
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.suggestion-item:hover,
-.request-item:hover {
-    background-color: #e8f4fd;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.suggestion-item span,
-.request-item span {
+.friend-request-suggestion-item span,
+.friend-request-request-item span {
     font-size: 1rem;
     color: #4a4a4a;
 }
 
-.add-icon,
-.accept-icon,
-.reject-icon {
+.friend-request-add-icon,
+.friend-request-accept-icon,
+.friend-request-reject-icon {
+    border: none;
+    background-color: transparent;
     font-size: 1.5rem;
     cursor: pointer;
     transition: transform 0.2s ease;
 }
 
-.add-icon {
+.friend-request-add-icon {
     color: #28a745;
 }
 
-.accept-icon {
+.friend-request-accept-icon {
     color: #28a745;
     margin-right: 12px;
 }
 
-.reject-icon {
+.friend-request-reject-icon {
     color: #dc3545;
 }
 
-.add-icon:hover,
-.accept-icon:hover,
-.reject-icon:hover {
+.friend-request-add-icon:hover,
+.friend-request-accept-icon:hover,
+.friend-request-reject-icon:hover {
     transform: scale(1.2);
 }
 
-.requests-list p {
+.friend-request-requests-list p {
     color: #6c757d;
     font-style: italic;
     text-align: center;
 }
 
-.no-results {
-    color: #6c757d;
-    text-align: center;
-    margin-top: 20px;
-    font-size: 1.1rem;
+.friend-request-bold {
+    font-weight: bold;
 }
