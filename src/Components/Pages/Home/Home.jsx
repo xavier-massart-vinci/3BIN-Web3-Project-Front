@@ -25,14 +25,22 @@ function Home() {
       setUserConnectedList((prev) => prev.filter((u) => u.id !== user.id));
     };
 
+    const handleFriendAdded = () => {
+      fetchFriends(setFriendList);
+    };
+
     socket.on("userDiscoveryInit", handleUserDiscoveryInit);
     socket.on("userDiscovery", handleUserDiscovery);
     socket.on("userDisconnect", handleUserDisconnect);
+    socket.on("friendAdded", handleFriendAdded);
+    socket.on("friendRemoved", handleFriendAdded)
 
     return () => {
       socket.off("userDiscoveryInit", handleUserDiscoveryInit);
       socket.off("userDiscovery", handleUserDiscovery);
       socket.off("userDisconnect", handleUserDisconnect);
+      socket.off("friendAdded", handleFriendAdded);
+      socket.off("friendRemoved", handleFriendAdded);
     };
   }, []);
 

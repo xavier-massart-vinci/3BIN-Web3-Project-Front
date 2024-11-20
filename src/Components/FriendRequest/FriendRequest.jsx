@@ -9,12 +9,13 @@ import './FriendRequest.css';
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const FriendRequest = () => {
+    const {setFriendList} = useOutletContext();
+
     const [username, setUsername] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [sentRequests, setSentRequests] = useState([]);
     const [receivedRequests, setReceivedRequests] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
-    const {setFriendList} = useOutletContext();
 
     useEffect(() => {
         // Fetch sent and received friend requests when the component mounts
@@ -22,18 +23,11 @@ const FriendRequest = () => {
         fetchReceivedRequests();
         fetchFriends(setFriendList);
 
-        // Écouter le message socket pour la mise à jour des amis
-        ['friendAdded', 'friendRequestRejected'].forEach(event => {
-            socket.on(event, () => {
-                console.log(`${event === 'friendAdded' ? 'Friend added' : 'Friend request rejected'}, refreshing friend list...`);
-                fetchFriends(setFriendList);
-                fetchSentRequests();
-                fetchReceivedRequests();
-            });
+        socket.on('friendRequestRejected', () => {
+            fetchSentRequests();
         });
 
         return () => {
-            socket.off('friendAdded');
             socket.off('friendRequestRejected');
         };
         
@@ -127,7 +121,7 @@ const FriendRequest = () => {
 
     return (
         <div className="friend-request-container">
-            <h2>Rechercher un ami</h2>
+            <h2 className="friend-request-h2">Rechercher un ami</h2>
             <input
                 type="text"
                 value={username}
@@ -150,7 +144,7 @@ const FriendRequest = () => {
                 </ul>
             )}
 
-            <h2>Demandes d&apos;ami envoyées</h2>
+            <h2 className="friend-request-h2">Demandes d&apos;ami envoyées</h2>
             <ul className="requests-list">
                 {sentRequests.length === 0 ? (
                     <p>Pas de demandes d&apos;ami envoyées en attente</p>
@@ -164,7 +158,7 @@ const FriendRequest = () => {
                 )}
             </ul>
 
-            <h2>Demandes d&apos;ami reçues</h2>
+            <h2 className="friend-request-h2">Demandes d&apos;ami reçues</h2>
             <ul className="requests-list">
                 {receivedRequests.length === 0 ? (
                     <p>Pas de demandes d&apos;ami en attente d&apos;acceptation</p>

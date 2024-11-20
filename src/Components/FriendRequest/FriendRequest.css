@@ -13,11 +13,12 @@
     transform: translateY(-5px);
 }
 
-h2 {
+.friend-request-h2 {
     margin-bottom: 20px;
     font-size: 20px;
     color: #4a4a4a;
-    border-bottom: 2px solid #007bff;
+    border-bottom: 2px solid #f0f0f0;
+
     padding-bottom: 8px;
 }
 
