@@ -194,34 +194,31 @@
   pointer-events: none;
 }
 
-
-/* Style pour la fenêtre pop-up */
-/* Fenêtre pop-up qui glisse à partir du côté gauche */
-.side-popup {
+.navbar-no-side-popup {
   position: fixed;
+  margin: 0px;
+  padding: 0px;
   top: 0;
   left: 0;
-  width: 25%; /* Adapte la largeur selon vos besoins */
+  width: 25%;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.9); /* Fond semi-transparent */
+  background-color: rgba(255, 255, 255, 0.9); 
   box-shadow: 2px 0 5px rgba(92, 92, 92, 0.1);
-  padding: 20px;
+  padding: 15px;
   box-sizing: border-box;
   overflow-y: auto;
   z-index: 1000;
   transition: transform 0.3s ease-out;
 }
 
-/* Cache le reste de la page */
-.side-popup-closed {
+.navbar-no-side-popup-closed {
   transform: translateX(-100%);
 }
 
-/* Style pour le bouton retour */
-.back-btn {
+.navbar-add-friend-back-btn {
   background-color: transparent;
   border: none;
-  color: #333;
+  color: #a6a6a6;
   font-size: 1.2em;
   cursor: pointer;
   display: flex;
@@ -229,11 +226,11 @@
   margin-bottom: 20px;
 }
 
-.back-btn i {
+.navbar-add-friend-back-btn i {
   margin-right: 8px;
 }
 
-.back-btn:hover {
-  color: #007bff;
+.navbar-add-friend-back-btn:hover {
+  color: #757575;
 }
 

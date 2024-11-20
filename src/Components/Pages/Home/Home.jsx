@@ -1,9 +1,8 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { socket } from "../../../socket";
 import Loading from "../../Loading/Loading";
-import fetchFriends from "../../FriendList/fetchFriends";
+import fetchFriends from '../../../utils/friends';
 import "./Home.css";
 
 function Home() {

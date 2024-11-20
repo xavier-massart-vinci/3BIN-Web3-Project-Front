@@ -1,7 +1,7 @@
 import { useOutletContext } from "react-router-dom";
 import axios from 'axios';
-import fetchFriends from './fetchFriends'; // Import the fetchFriends function
 import './FriendList.css';  // Import CSS for styling
+import fetchFriends from '../../utils/friends';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

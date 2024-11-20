@@ -13,9 +13,9 @@ const Navbar = () => {
   const username = JSON.parse(localStorage.getItem("user")).username;
   const userId = JSON.parse(localStorage.getItem("user")).id;
 
-    const togglePopup = () => {
-        setIsPopupOpen(!isPopupOpen);
-    };
+  const togglePopup = () => {
+      setIsPopupOpen(!isPopupOpen);
+  };
 
   return (
     <div className="navbar">
@@ -93,9 +93,8 @@ const Navbar = () => {
           ))}
       </div>
             {isPopupOpen && (
-                <div className="side-popup">
-                    {/* Bouton retour en arrière */}
-                    <button className="back-btn" onClick={togglePopup}>
+                <div className="navbar-no-side-popup">
+                    <button className="navbar-add-friend-back-btn" onClick={togglePopup}>
                         <i className="fas fa-arrow-left"></i>
                     </button>
                     <FriendsPage/>
