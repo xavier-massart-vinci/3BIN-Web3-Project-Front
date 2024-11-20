@@ -2,6 +2,7 @@ import { useMatch, useOutletContext } from "react-router-dom";
 import { socket } from "../../socket";
 import ChatBox from "../ChatBox/ChatBox";
 import MessageBar from "../MessageBar/MessageBar";
+import ChatHeader from "../ChatHeader/ChatHeader";
 import "./Chat.css";
 
 function Chat() {
@@ -29,6 +30,7 @@ function Chat() {
 
   return (
     <div className="chat-container">
+      <ChatHeader currentContact={currentContact} />
       <ChatBox currentContact={currentContact} />
       <MessageBar sendMessage={sendMessage} />
     </div>

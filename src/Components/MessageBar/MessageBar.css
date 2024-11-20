@@ -71,6 +71,7 @@
     max-width: 600px; /* Assurez-vous que le conteneur parent a la même largeur maximale que la barre de message */
     margin-left: auto; 
     margin-right: auto; 
+    margin-top: auto;
 }
 
 .commands-list {

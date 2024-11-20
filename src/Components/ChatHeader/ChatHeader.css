@@ -1,0 +1,101 @@
+.chat-header {
+  position: fixed;
+  display: flex;
+  flex-direction: row; /* Change la direction en ligne */
+  top: 0;
+  right: 0;
+  width: 75%;
+  height: 55px;
+  padding: 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ddd;
+  justify-content: space-between; /* Espace entre les sections */
+  align-items: center; /* Aligne verticalement les éléments */
+}
+
+.chat-header-contact {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center; /* Assure que tout est aligné verticalement */
+}
+
+.chat-header-profile {
+  display: flex;
+  align-items: center;
+}
+
+.chat-header-profile-picture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.chat-header-status {
+  display: flex;
+  align-items: center;
+}
+
+.chat-header-status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.chat-header-status-indicator.online {
+  background-color: green;
+}
+
+.chat-header-status-indicator.offline {
+  background-color: gray;
+}
+
+.chat-header-status-text {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.chat-header-settings {
+  margin-left: 20px;
+  position: relative;
+}
+
+.chat-header-settings-button {
+  background: none;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+  font-size: 1.5em;
+  color: #a6a6a6;
+}
+
+.chat-header-settings-button:hover {
+  color: #757575;
+}
+
+.chat-header-settings-menu {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background-color: white;
+  border-radius: 5px;
+  width: 150px;
+}
+
+.chat-header-settings-menu button {
+  width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  border: 1px solid #ddd;
+}
+
+.chat-header-settings-menu button:hover {
+  background-color: #f0f0f0;
+  border: 2px solid #ad00005d;
+}
