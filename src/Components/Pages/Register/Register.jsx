@@ -24,7 +24,7 @@ function Register() {
     event.preventDefault();
 
     if (password !== password2) {
-      setError("Passwords do  not match");
+      setError("Les mots de passes ne sont pas identiques");
     } else {
       setError("");
       try {
