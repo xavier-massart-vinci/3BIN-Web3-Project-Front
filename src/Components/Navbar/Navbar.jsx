@@ -1,15 +1,22 @@
 import { useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import group from "../../assets/group.png";
 import profil from "../../assets/profil.png";
 import { logout } from "../../utils/services";
+import FriendsPage from "../Pages/Friends/FriendsPage";
 import "./Navbar.css";
 
 const Navbar = () => {
   const [currentContact, setCurrentContact] = useState(0);
-  const { userConnectedList, friendList } = useOutletContext();
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const { userConnectedList, friendList} = useOutletContext();
   const username = JSON.parse(localStorage.getItem("user")).username;
   const userId = JSON.parse(localStorage.getItem("user")).id;
+
+  const togglePopup = () => {
+      setIsPopupOpen(!isPopupOpen);
+  };
 
   return (
     <div className="navbar">
@@ -31,7 +38,7 @@ const Navbar = () => {
           </button>
           <button
             className="navbar-profile-action-btn"
-            onClick={() => console.log()}
+            onClick={togglePopup}
           >
             <i className="fas fa-user-plus"></i>
           </button>
@@ -86,6 +93,22 @@ const Navbar = () => {
             </Link>
           ))}
       </div>
+      <AnimatePresence>
+        {isPopupOpen && (
+          <motion.div
+            className="navbar-no-side-popup"
+            initial={{ x: "-100%" }} // Start position (invisible)
+            animate={{ x: 0 }} // Target position
+            exit={{ x: "-100%" }} // Back to start position
+            transition={{ duration: 0.2, ease: "easeInOut" }} // Animation duration and easing
+          >
+            <button className="navbar-add-friend-back-btn" onClick={togglePopup}>
+              <i className="fas fa-arrow-left"></i>
+            </button>
+            <FriendsPage />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

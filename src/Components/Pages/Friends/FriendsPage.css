@@ -1,0 +1,109 @@
+.friend-request-container {
+    max-width: 800px;
+    margin: 0px auto;
+    padding: 0px 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: rgba(255, 255, 255, 0.9); 
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.friend-request-h2 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #4a4a4a;
+    border-bottom: 2px solid #f0f0f0;
+
+    padding-bottom: 8px;
+}
+
+.search-bar {
+    width: 90%;
+    padding: 12px;
+    margin-bottom: 25px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: #f7f7f7;
+    transition: border-color 0.3s ease;
+}
+
+.search-bar:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.friend-request-error-message-friend {
+    color: #ff4d4d;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.friend-request-suggestions-list,
+.friend-request-requests-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.friend-request-suggestion-item,
+.friend-request-request-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.friend-request-suggestion-item span,
+.friend-request-request-item span {
+    font-size: 1rem;
+    color: #4a4a4a;
+}
+
+.friend-request-add-icon,
+.friend-request-accept-icon,
+.friend-request-reject-icon {
+    border: none;
+    background-color: transparent;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.friend-request-add-icon {
+    color: #28a745;
+}
+
+.friend-request-accept-icon {
+    color: #28a745;
+    margin-right: 12px;
+}
+
+.friend-request-reject-icon {
+    color: #dc3545;
+}
+
+.friend-request-add-icon:hover,
+.friend-request-accept-icon:hover,
+.friend-request-reject-icon:hover {
+    transform: scale(1.2);
+}
+
+.friend-request-requests-list p {
+    color: #6c757d;
+    font-style: italic;
+    text-align: center;
+}
+
+.friend-request-bold {
+    font-weight: bold;
+}

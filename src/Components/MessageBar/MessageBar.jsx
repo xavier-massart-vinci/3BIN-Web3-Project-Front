@@ -1,10 +1,12 @@
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
-import { useEffect, useState } from "react";
+import {useEffect, useState } from "react";
+import { socket } from '../../socket';
 import "./MessageBar.css";
 
 function MessageBar({ sendMessage }) {
   const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   //commands
   const [showCommands, setShowCommands] = useState(false);
   const [filteredCommands, setFilteredCommands] = useState([]);
@@ -35,14 +37,26 @@ function MessageBar({ sendMessage }) {
     window.addEventListener("keydown", handleEscapeKey);
     window.addEventListener("mousedown", handleOutsideClick);
 
+    const handleMessageError = (error) => {
+      if (error && error.error) {
+          setErrorMessage(error.error);
+      }
+    };
+
+    socket.on('messageError', handleMessageError);
+
     return () => {
       window.removeEventListener("mousedown", handleOutsideClick);
       window.removeEventListener("keydown", handleEscapeKey);
+      socket.off('messageError', handleMessageError);
     };
   }, []);
 
+
+
   const handleMessage = () => {
     if (message.trim() === "") return;
+    setErrorMessage('');
     const messageFormatted = { content: message, type: "text" };
     sendMessage(messageFormatted);
     setMessage("");
@@ -105,6 +119,7 @@ function MessageBar({ sendMessage }) {
     setMessage(command);
     setShowCommands(false);
   };
+
 
   return (
     <div className="message-bar-container">
