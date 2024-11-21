@@ -1,7 +1,7 @@
 import axios from "axios";
 import { socket } from "../socket";
 
-let useJustRegister = true; // TODO chnage a false for prod
+let useJustRegister = false;
 
 const register = async (payload) => {
   const request = axios.post(
