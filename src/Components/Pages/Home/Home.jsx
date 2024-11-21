@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { socket } from "../../../socket";
 import Loading from "../../Loading/Loading";
+import fetchUsers from "../../../utils/users";
 import fetchFriends from '../../../utils/friends';
 import "./Home.css";
 
 function Home() {
   const [friendList, setFriendList] = useState([]);
+  const [usersList, setUsersList] = useState([]);
   const [userConnectedList, setUserConnectedList] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -47,12 +49,14 @@ function Home() {
   // Fetch friend list from API
   useEffect(() => {
     fetchFriends(setFriendList);
+    fetchUsers(setUsersList);
   }, []);
 
   const context = {
     userConnectedList,
     friendList,
     setFriendList,
+    usersList,
   };
 
   return <>{loading ? <Loading /> : <Outlet context={context} />}</>;

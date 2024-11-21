@@ -3,7 +3,7 @@ import { useOutletContext } from "react-router-dom";
 import "./MessageCard.css";
 
 function MessageCard({ message, isSent, showSenderInfo }) {
-  const { friendList } = useOutletContext();
+  const { usersList } = useOutletContext();
   const [showError, setShowError] = useState(message.type === "error");
 
   useEffect(() => {
@@ -63,7 +63,7 @@ function MessageCard({ message, isSent, showSenderInfo }) {
             <span className="chatbox-username">
               {isSent
                 ? "Vous - "
-                : friendList.find((u) => u.id === message.from)?.username +
+                : usersList.find((u) => u.id === message.from)?.username +
                   " - "}
             </span>
           )}
