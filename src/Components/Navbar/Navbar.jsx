@@ -5,6 +5,7 @@ import group from "../../assets/group.png";
 import profil from "../../assets/profil.png";
 import { logout } from "../../utils/services";
 import FriendsPage from "../Pages/Friends/FriendsPage";
+import { capitalizeFirstLetter } from "../../utils/utils";
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -27,7 +28,7 @@ const Navbar = () => {
             alt="Profile"
             className="navbar-profile-image navbar-no-select-image"
           />
-          <h4 className="navbar-profile-username">{username}</h4>
+          <h4 className="navbar-profile-username">{capitalizeFirstLetter(username)}</h4>
         </div>
         <div className="navbar-profile-actions">
           <button
@@ -89,7 +90,7 @@ const Navbar = () => {
                   <div className="navbar-contact-image-status-online"></div>
                 )}
               </div>
-              <p>{contact.username}</p>
+              <p>{capitalizeFirstLetter(contact.username)}</p>
             </Link>
           ))}
       </div>
