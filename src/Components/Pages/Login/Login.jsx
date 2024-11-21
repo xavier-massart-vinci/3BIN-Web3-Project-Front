@@ -22,6 +22,17 @@ function Login() {
   const loginRequest = async (e) => {
     e.preventDefault();
 
+    const alphanumericRegex = /^[a-zA-Z0-9]+$/;
+    if (username.length < 3 || username.length > 15) {
+      setError("Le pseudo doit contenir entre 3 et 15 caractères.");
+      return;
+    }
+    if (!alphanumericRegex.test(username)) {
+      setError("Le pseudo doit contenir uniquement des lettres et des chiffres.");
+      return;
+    }
+
+    setError("");
     try {
       await login({
         username: username,
@@ -43,7 +54,7 @@ function Login() {
         <div className="login-container">
           <div className="login-form-wrapper">
             <form onSubmit={loginRequest} className="login-form">
-              <h2 className="form-title">S'identifier</h2>
+              <h2 className="form-title">S&apos;identifier</h2>
 
               <div className="form-group">
                 <label htmlFor="pseudo" className="form-label">

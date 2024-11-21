@@ -23,16 +23,27 @@ function Register() {
   const handleForm = async (event) => {
     event.preventDefault();
 
+    const alphanumericRegex = /^[a-zA-Z0-9]+$/;
+    if (username.length < 3 || username.length > 15) {
+      setError("Le pseudo doit contenir entre 3 et 15 caractères.");
+      return;
+    }
+    if (!alphanumericRegex.test(username)) {
+      setError("Le pseudo doit contenir uniquement des lettres et des chiffres.");
+      return;
+    }
+    
     if (password !== password2) {
       setError("Les mots de passes ne sont pas identiques");
-    } else {
-      setError("");
-      try {
-        await registerRequest();
-        navigate("/");
-      } catch (e) {
-        setError(errorMapping(e.status));
-      }
+      return;
+    }
+
+    setError("");
+    try {
+      await registerRequest();
+      navigate("/");
+    } catch (e) {
+      setError(errorMapping(e.status));
     }
   };
 
@@ -54,7 +65,7 @@ function Register() {
         <div className="register-container">
           <div className="register-form-wrapper">
             <form onSubmit={handleForm} className="register-form">
-              <h2 className="form-title">S'inscrire</h2>
+              <h2 className="form-title">S&apos;inscrire</h2>
 
               <div className="form-group">
                 <label htmlFor="Username" className="form-label">
@@ -102,7 +113,7 @@ function Register() {
               </div>
 
               <button type="submit" className="form-button">
-                S'inscrire
+                S&apos;inscrire
               </button>
 
               <p className="error-message-register">{error}</p>
