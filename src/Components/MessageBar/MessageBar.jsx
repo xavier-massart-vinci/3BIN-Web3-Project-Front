@@ -245,15 +245,30 @@ function MessageBar({ sendMessage, currentContact }) {
       <div className="typing-indicator">
         {isTyppingUsers.length > 0 && 
           <div>
-            {isTyppingUsers.length === 1
-              ? `${isTyppingUsers[0]} est en train d'écrire`
-              : `${isTyppingUsers
-                .slice(0, 2) // On garde seulement les 3 premiers
-                .join(", ")}${
-                isTyppingUsers.length > 2
-                  ? ` et ${isTyppingUsers.length - 2} autres`
-                  : ""
-              } sont en train d'écrire`}
+            {(() => {
+              const maxCharacters = 20;
+              const displayedUsers = [];
+              let totalLength = 0;
+
+              for (const user of isTyppingUsers) {
+                if (totalLength + user.length <= maxCharacters) {
+                  displayedUsers.push(user);
+                  totalLength += user.length + 2;
+                } else {
+                  break;
+                }
+              }
+
+              const remainingUsers = isTyppingUsers.length - displayedUsers.length;
+
+              if (displayedUsers.length === 1 && remainingUsers === 0) {
+                return `${displayedUsers[0]} est en train d'écrire`;
+              }
+
+              return `${displayedUsers.join(", ")}${
+                remainingUsers > 0 ? ` et ${remainingUsers} autre(s)` : ""
+              } sont en train d'écrire`;
+            })()}
             <span className="dot-animation">
               <span>.</span>
               <span>.</span>
