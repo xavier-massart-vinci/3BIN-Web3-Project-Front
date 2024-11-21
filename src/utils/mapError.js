@@ -5,7 +5,7 @@ const errorMapping = (codeError) => {
       message = "Veuillez vérifier votre saisie et réessayer";
       break;
     case 401:
-      message = "Veuillez vérifier votre saisie et réessayer";
+      message = "Les informations d'identification sont incorrectes. Veuillez réessayer!";
       break;
     case 409:
       message = "Il y a un utilisateur avec les mêmes informations d'identification. Veuillez réessayer!";
