@@ -1,0 +1,46 @@
+/* home.css */
+
+/* Styles pour l'overlay du modal */
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000; /* Pour garantir qu'il est au-dessus d'autres éléments */
+}
+
+/* Styles pour le contenu du modal */
+.modal-content {
+  width: 600px;
+  margin: 0 auto;
+  background: white;
+  color: black;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  outline: none;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Bouton de fermeture */
+.modal-close-button {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modal-close-button:hover {
+  background-color: #0056b3;
+}

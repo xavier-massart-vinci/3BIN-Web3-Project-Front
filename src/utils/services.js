@@ -1,6 +1,8 @@
 import axios from "axios";
 import { socket } from "../socket";
 
+let useJustRegister = false;
+
 const register = async (payload) => {
   const request = axios.post(
     `${import.meta.env.VITE_API_BASE_URL}/auth/register`,
@@ -12,6 +14,7 @@ const register = async (payload) => {
   localStorage.setItem("user", JSON.stringify(value.user));
   socket.auth = { token: token };
   socket.connect();
+  useJustRegister = true;
 };
 
 const login = async (payload) => {
@@ -33,4 +36,4 @@ const logout = () => {
   window.location.reload();
 };
 
-export { login, logout, register };
+export { login, logout, register, useJustRegister };
