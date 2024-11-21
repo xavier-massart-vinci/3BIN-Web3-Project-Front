@@ -72,6 +72,8 @@
     margin-left: auto; 
     margin-right: auto; 
     margin-top: auto;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
 }
 
 .commands-list {
@@ -102,4 +104,47 @@
     width: 90%;
     border-radius: 10px;
     background-color: #e0e0e0; /* Couleur de fond grisée */
+  }
+
+  .typing-indicator {
+    font-style: italic;
+    color: #888;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    display: inline-block;
+  }
+  
+
+  .dot-animation {
+    display: inline-block;
+    margin-left: 5px;
+  }
+  
+  .dot-animation span {
+    display: inline-block;
+    animation: blink 1.5s infinite;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .dot-animation span:nth-child(1) {
+    animation-delay: 0s;
+  }
+  .dot-animation span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .dot-animation span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  
+  @keyframes blink {
+    0%, 20% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
   }

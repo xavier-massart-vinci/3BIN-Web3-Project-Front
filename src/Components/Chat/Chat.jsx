@@ -10,7 +10,9 @@ function Chat() {
 
   const match = useMatch("/chat/:userId");
   let currentContactId = match?.params.userId;
-  let currentContact = undefined;
+
+  let currentContact = undefined
+
 
   if (currentContactId !== undefined) {
     // Don't check if global chat
@@ -32,7 +34,7 @@ function Chat() {
     <div className="chat-container">
       <ChatHeader currentContact={currentContact} />
       <ChatBox currentContact={currentContact} />
-      <MessageBar sendMessage={sendMessage} />
+      <MessageBar sendMessage={sendMessage} currentContact={currentContact} />
     </div>
   );
 }
