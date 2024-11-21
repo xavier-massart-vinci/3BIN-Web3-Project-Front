@@ -1,0 +1,12 @@
+.app-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.app-message {
+  font-size: 1.5rem;
+}
+
