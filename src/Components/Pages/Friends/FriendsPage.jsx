@@ -25,10 +25,12 @@ const FriendsPage = () => {
 
         socket.on('friendRequestRejectedOrAccepted', fetchSentRequests);
         socket.on('friendRequestReceived', fetchReceivedRequests);
+        socket.on('friendRequestCanceled', fetchReceivedRequests);
 
         return () => {
             socket.off('friendRequestRejectedOrAccepted');
             socket.off('friendRequestReceived');
+            socket.off('friendRequestCanceled');
         };
         
     }, [setFriendList]);
@@ -123,6 +125,20 @@ const FriendsPage = () => {
         })
         .catch(error => console.error('Error responding to request:', error));
     };
+
+    const handleCancelRequest = (requestId) => {
+        axios.post(`${BASE_URL}/friends/cancelFriendRequest`, {
+            requestId: requestId
+        }, {
+            headers: {
+                'Authorization': `${localStorage.getItem('token')}`
+            }
+        })
+        .then(() => {
+            fetchSentRequests(); 
+        })
+        .catch(error => console.error('Error responding to request:', error));
+    };
     
 
     return (
@@ -161,6 +177,13 @@ const FriendsPage = () => {
                     sentRequests.map((request, index) => (
                         <li key={index} className="friend-request-request-item">
                             <span>Invitation envoyé à <span className='friend-request-bold'>{request.receiver}</span></span>
+                            <button
+                                className="friend-request-cancel-icon"
+                                onClick={() => handleCancelRequest(request._id)}
+                                aria-label="Annuler la demande"
+                            >
+                                <i className="fas fa-times"></i>
+                            </button>
                         </li>
                     ))
                 )}
