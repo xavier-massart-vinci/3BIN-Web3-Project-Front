@@ -1,12 +1,11 @@
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
-import {useEffect, useState } from "react";
+import {useEffect, useState, useRef } from "react";
 import { socket } from '../../socket';
 import "./MessageBar.css";
 
-function MessageBar({ sendMessage }) {
+function MessageBar({ sendMessage, currentContact }) {
   const [message, setMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState('');
   //commands
   const [showCommands, setShowCommands] = useState(false);
   const [filteredCommands, setFilteredCommands] = useState([]);
@@ -18,6 +17,11 @@ function MessageBar({ sendMessage }) {
   const [sendButtonSize, setSendButtonSize] = useState("normal");
   const [emojiButtonSize, setEmojiButtonSize] = useState("normal");
   const buttonEmojis = ["😎", "😊", "🥺", "😂", "😍"];
+  //isTyping
+  const [isTyppingUsers, setIsTyppingUsers] = useState([]);
+  const [isTyppingChecked, setIsTyppingChecked] = useState(false);
+  const friendIstypingTimeoutRef = useRef(null);
+  const timeoutsRef = useRef({});
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -37,26 +41,71 @@ function MessageBar({ sendMessage }) {
     window.addEventListener("keydown", handleEscapeKey);
     window.addEventListener("mousedown", handleOutsideClick);
 
-    const handleMessageError = (error) => {
-      if (error && error.error) {
-          setErrorMessage(error.error);
-      }
-    };
-
-    socket.on('messageError', handleMessageError);
-
     return () => {
       window.removeEventListener("mousedown", handleOutsideClick);
       window.removeEventListener("keydown", handleEscapeKey);
-      socket.off('messageError', handleMessageError);
     };
   }, []);
 
+  // Message Typing
+  useEffect(() => {
+    socket.on("isTyping", (data) => {
+      if (timeoutsRef.current[data.username]) {
+        clearTimeout(timeoutsRef.current[data.username]);
+      }
 
+      if (data.status === "stop") {
+        setIsTyppingUsers((prev) => prev.filter((u) => u !== data.username));
+        return;
+      }
+
+      console.log(data.chat, currentContact?.username)
+      if (data.chat === "global" && currentContact === undefined) {
+        setIsTyppingUsers((prev) => {
+          if (prev.includes(data.username)) return prev;
+          return [...prev, data.username];
+        });
+      } else if (data.chat !== "global" && data.username === currentContact?.username) {
+        setIsTyppingUsers((prev) => {
+          if (prev.includes(data.username)) return prev;
+          return [...prev, data.username];
+        });
+      }
+
+      timeoutsRef.current[data.username] = setTimeout(() => {
+        setIsTyppingUsers((prev) => prev.filter((u) => u !== data.username));
+        delete timeoutsRef.current[data.username]; 
+      }, 3000); 
+    });
+
+    return () => {
+      clearTimeout(friendIstypingTimeoutRef.current);
+      setIsTyppingUsers([]);
+      stopIsTyping();
+      socket.off("isTyping");
+    };
+  }, [currentContact]);
+
+  const sendIsTyping = () => {
+    if (currentContact === undefined)
+      socket.emit("isTyping", {to: "global", status: "start"}); 
+    else
+      socket.emit("isTyping", {to: currentContact.id, status: "start"}); 
+  };
+
+  const stopIsTyping = () => {
+    if (currentContact === undefined)
+      socket.emit("isTyping", {to: "global", status: "stop"}); 
+    else
+      socket.emit("isTyping", {to: currentContact.id, status: "stop"}); 
+  };
 
   const handleMessage = () => {
     if (message.trim() === "") return;
-    setErrorMessage('');
+
+    // Notify others that typing has stopped
+    stopIsTyping();
+
     const messageFormatted = { content: message, type: "text" };
     sendMessage(messageFormatted);
     setMessage("");
@@ -113,6 +162,15 @@ function MessageBar({ sendMessage }) {
     } else {
       setShowCommands(false);
     }
+
+    // Notify others that the user is typing
+    if (isTyppingChecked) return
+    sendIsTyping();
+    setIsTyppingChecked(true);
+
+    setTimeout(() => {
+      setIsTyppingChecked(false);
+    }, 2000);
   };
 
   const handleCommandClick = (command) => {
@@ -183,6 +241,28 @@ function MessageBar({ sendMessage }) {
           ➤
         </button>
       </div>
+
+      <div className="typing-indicator">
+        {isTyppingUsers.length > 0 && 
+          <div>
+            {isTyppingUsers.length === 1
+              ? `${isTyppingUsers[0]} est en train d'écrire`
+              : `${isTyppingUsers
+                .slice(0, 2) // On garde seulement les 3 premiers
+                .join(", ")}${
+                isTyppingUsers.length > 2
+                  ? ` et ${isTyppingUsers.length - 2} autres`
+                  : ""
+              } sont en train d'écrire`}
+            <span className="dot-animation">
+              <span>.</span>
+              <span>.</span>
+              <span>.</span>
+            </span>
+          </div>}
+      </div>
+      
+
     </div>
   );
 }
