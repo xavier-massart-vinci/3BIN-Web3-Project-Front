@@ -59,12 +59,13 @@ function MessageBar({ sendMessage, currentContact }) {
         return;
       }
 
+      console.log(data.chat, currentContact?.username)
       if (data.chat === "global" && currentContact === undefined) {
         setIsTyppingUsers((prev) => {
           if (prev.includes(data.username)) return prev;
           return [...prev, data.username];
         });
-      } else if (data.username === currentContact?.username) {
+      } else if (data.chat !== "global" && data.username === currentContact?.username) {
         setIsTyppingUsers((prev) => {
           if (prev.includes(data.username)) return prev;
           return [...prev, data.username];
