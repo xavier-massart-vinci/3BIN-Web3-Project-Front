@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { Outlet } from "react-router-dom";
 import { socket } from "../../../socket";
-import fetchFriends from "../../../utils/friends";
 import { useJustRegister } from "../../../utils/services";
 import Loading from "../../Loading/Loading";
 import fetchUsers from "../../../utils/users";
