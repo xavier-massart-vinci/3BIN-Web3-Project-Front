@@ -5,12 +5,15 @@ import { socket } from "../../../socket";
 import fetchFriends from "../../../utils/friends";
 import { useJustRegister } from "../../../utils/services";
 import Loading from "../../Loading/Loading";
+import fetchUsers from "../../../utils/users";
+import fetchFriends from '../../../utils/friends';
 import "./Home.css";
 
 Modal.setAppElement("#root");
 
 function Home() {
   const [friendList, setFriendList] = useState([]);
+  const [usersList, setUsersList] = useState([]);
   const [userConnectedList, setUserConnectedList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(useJustRegister);
@@ -52,12 +55,14 @@ function Home() {
   // Fetch friend list from API
   useEffect(() => {
     fetchFriends(setFriendList);
+    fetchUsers(setUsersList);
   }, []);
 
   const context = {
     userConnectedList,
     friendList,
     setFriendList,
+    usersList,
   };
 
   return (
