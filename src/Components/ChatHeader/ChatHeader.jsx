@@ -5,6 +5,7 @@ import axios from "axios";
 import fetchFriends from "../../utils/friends";
 import profil from "../../assets/profil.png";
 import group from "../../assets/group.png";
+import { capitalizeFirstLetter } from "../../utils/utils";
 import "./ChatHeader.css";
 
 function ChatHeader({ currentContact }) {
@@ -68,7 +69,7 @@ function ChatHeader({ currentContact }) {
             src={profil}
             alt="Chat logo"
           />
-          <span className="profile-name">{currentContact.username}</span>
+          <span className="profile-name">{capitalizeFirstLetter(currentContact.username)}</span>
         </div>
         <div className="chat-header-status">
           <span

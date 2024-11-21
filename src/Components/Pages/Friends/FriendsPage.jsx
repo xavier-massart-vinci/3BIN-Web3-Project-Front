@@ -3,6 +3,7 @@ import { useOutletContext } from "react-router-dom";
 import { socket } from '../../../socket';
 import axios from 'axios';
 import fetchFriends from '../../../utils/friends';
+import { capitalizeFirstLetter } from '../../../utils/utils';
 import './FriendsPage.css';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -158,7 +159,7 @@ const FriendsPage = () => {
                 <ul className="friend-request-suggestions-list">
                     {suggestions.map((suggestion, index) => (
                         <li key={index} className="friend-request-suggestion-item">
-                            <span>{suggestion.username}</span>
+                            <span>{capitalizeFirstLetter(suggestion.username)}</span>
                             <button 
                                 className="friend-request-add-icon" 
                                 onClick={() => sendFriendRequest(suggestion.username)}>
@@ -176,7 +177,7 @@ const FriendsPage = () => {
                 ) : (
                     sentRequests.map((request, index) => (
                         <li key={index} className="friend-request-request-item">
-                            <span>Invitation envoyé à <span className='friend-request-bold'>{request.receiver}</span></span>
+                            <span>Invitation envoyé à <span className='friend-request-bold'>{capitalizeFirstLetter(request.receiver)}</span></span>
                             <button
                                 className="friend-request-cancel-icon"
                                 onClick={() => handleCancelRequest(request._id)}
@@ -196,7 +197,7 @@ const FriendsPage = () => {
                 ) : (
                     receivedRequests.map((request, index) => (
                         <li key={index} className="friend-request-request-item">
-                            <span>{request.sender}</span>
+                            <span>{capitalizeFirstLetter(request.sender)}</span>
                             <button 
                                 className="friend-request-accept-icon" 
                                 onClick={() => respondToRequest(request._id, 'accept')}>

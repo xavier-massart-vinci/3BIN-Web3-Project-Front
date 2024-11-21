@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
+import { capitalizeFirstLetter } from "../../utils/utils";
 import "./MessageCard.css";
 
 function MessageCard({ message, isSent, showSenderInfo }) {
@@ -63,7 +64,7 @@ function MessageCard({ message, isSent, showSenderInfo }) {
             <span className="chatbox-username">
               {isSent
                 ? "Vous - "
-                : usersList.find((u) => u.id === message.from)?.username +
+                : capitalizeFirstLetter(usersList.find((u) => u.id === message.from)?.username) +
                   " - "}
             </span>
           )}
