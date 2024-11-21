@@ -107,3 +107,17 @@
 .friend-request-bold {
     font-weight: bold;
 }
+
+.friend-request-cancel-icon {
+    border: none;
+    background: transparent;
+    color: #dc3545;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.friend-request-cancel-icon:hover {
+    transform: scale(1.2);
+    color: #ff6b6b;
+}
