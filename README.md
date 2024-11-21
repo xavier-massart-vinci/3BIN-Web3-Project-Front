@@ -1,8 +1,36 @@
-# React + Vite
+# Project Web3 Front
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Installation
 
-Currently, two official plugins are available:
+1. Clone the repository:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+   ```sh
+   git clone https://github.com/xavier-massart-vinci/3BIN-Web3-Project-Front.git
+   ```
+
+2. Navigate to the project directory:
+   ```sh
+   cd project-web3-front
+   ```
+3. Install the dependencies:
+
+   ```sh
+   npm install
+   ```
+
+4. Start the development server:
+   ```sh
+   npm run dev
+   ```
+
+## Production
+
+1. Create an .env and add the api ip/domain
+   ```env
+       VITE_API_BASE_URL=YOUR_API_IP
+   ```
+2. Start and install for production mode:
+   ```sh
+   npm install
+   npm run build
+   ```
